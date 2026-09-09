@@ -1,0 +1,567 @@
+===============================
+CANDIDATE
+===============================
+
+Name:
+Yishai Stern
+
+Current positioning:
+Engineering Team Lead / Senior Software Engineer
+
+Target roles:
+- Senior Software Engineer
+- Full-Stack Team Lead
+- Engineering Team Lead
+- AI Engineering
+- Developer Productivity
+- AI-powered Developer Tools / Automation
+
+Primary strengths:
+- 10+ years of software engineering experience
+- Full-stack development
+- Backend engineering
+- Technical leadership
+- Team leadership
+- AI-powered developer tooling
+- AI coding agents
+- MCP integrations
+- LLM-based workflows
+- Developer productivity
+- Microservices
+- APIs
+- Kubernetes
+- CI/CD
+- TypeScript / Angular
+- Node.js
+
+
+===============================
+CURRENT ROLE
+===============================
+
+ZOOMINFO
+Team Lead, Software Engineering | Productivity Engineering
+2024 – Present
+
+Team:
+- Leads a team of 4 engineers
+
+Core responsibility:
+- Leads Productivity Engineering initiatives
+- Builds AI-powered internal tools and developer productivity platforms
+- Remains hands-on technically
+- Works across frontend, backend, AI workflows, and infrastructure
+
+AI / Developer Productivity:
+- Uses AI coding agents DAILY as part of hands-on software development
+- Builds AI-powered developer tools
+- Builds LLM-based engineering workflows
+- Works with MCP
+- Works with LangChain
+- Builds AI-assisted engineering workflows
+
+Important clarification:
+- Yishai did NOT own or make the company-wide AI strategy/decision.
+- He was part of the team that went deepest into AI and was heavily hands-on.
+- Do not describe him as the company-wide AI strategy owner.
+
+AI workflows:
+- Some workflows are automatically triggered by metrics.
+- Some workflows are actively initiated by users.
+- Do not describe these as fully autonomous multi-agent systems unless explicitly verified.
+
+Major project:
+MCP for internal Design System
+- Built an MCP integration for the internal Design System
+- Connected directly to the UI monorepo
+- Enables engineers to interact with/query Design System components through AI-assisted development
+- Can also update changes in the Design System
+- Available to UI teams
+- Integrated into the existing UI monorepo workflow
+- Used regularly / daily
+- Idea-to-production took approximately 5 months
+- No precise adoption percentage
+- No quantified time-saving metric
+- Do not invent metrics
+
+Figma-to-Code:
+- Built an AI-powered system that generates production-ready frontend components from Figma/design files
+- Served as a practical stepping stone toward broader AI-assisted development
+
+Datadog MCP:
+- Built an MCP integration for Datadog
+- Enables AI-assisted log analysis / observability workflows
+
+Customer Ticket Intelligence:
+- Built a real-time customer health dashboard
+- Correlates customer health with CSAT incidents
+
+Leadership:
+- Technical leadership
+- Architecture
+- Planning
+- Delegation
+- Mentoring
+- Cross-functional collaboration
+- Product / Design / QA collaboration
+
+Important:
+- User said he handled "הכול" regarding leadership responsibilities.
+- Before explicitly claiming hiring, onboarding, performance reviews, roadmap ownership, etc., verify the exact responsibility if needed.
+
+
+===============================
+PREVIOUS ROLE
+===============================
+
+ZOOMINFO
+Team Leader, Full-Stack Engineering
+End of 2020 – 2024
+
+Responsibilities / experience:
+- Full-stack engineering
+- Backend development
+- Frontend development
+- Microservices
+- APIs
+- Databases
+- Backend infrastructure
+- Frontend infrastructure
+- Kubernetes deployments
+- CI/CD
+- GitHub Actions
+- Architecture
+- Product / Design / QA collaboration
+- Enterprise-scale products
+- Large-scale data operations
+
+Key accomplishment:
+- First engineer at ZoomInfo to implement unit testing practices
+- Helped establish foundation for broader automated testing adoption
+
+Important:
+- Significant hands-on backend work
+- Built microservices
+- Deployed services to Kubernetes
+- Migrated CI/CD to GitHub Actions according to engineering needs
+
+
+===============================
+EARLIER ZOOMINFO ROLE
+===============================
+
+ZOOMINFO
+Full-Stack Engineer
+2020
+
+Technologies:
+- Angular
+- TypeScript
+- Node.js
+- SQL
+- NGRX
+
+Worked across:
+- Frontend
+- Backend
+- APIs
+- Business logic
+
+
+===============================
+BROARDIDGE
+===============================
+
+BROadridge Financial Solutions
+Front-End Developer
+2018 – 2020
+
+Important timeline:
+- This role was BEFORE ZoomInfo
+- There is NO overlap
+
+Experience:
+- Angular-based financial applications
+- Major US clients including Morgan Stanley
+- Angular
+- TypeScript
+- NGRX Store
+- Unit testing
+- Architecture
+- Performance
+- Collaboration with QA teams in India
+
+
+===============================
+CAMBIUM
+===============================
+
+CAMBIUM (acquired by Matrix)
+Front-End Developer
+2013 – 2018
+
+Experience:
+- Mobile applications
+- Web applications
+- CMS
+- Responsive web applications
+- Server-side rendering
+- Large digital properties
+
+Projects / clients mentioned:
+- Next Star
+- Or Yarok
+- LaMetayel Checklist
+- Sport5
+- Channel 13
+- Channel 10
+
+
+===============================
+TECHNICAL SKILLS
+===============================
+
+Frontend:
+- Angular
+- TypeScript
+- JavaScript
+- NGRX
+- HTML5
+- CSS3
+
+Backend:
+- Node.js
+- Python
+- SQL
+- PL/SQL
+- MongoDB
+- Redis
+- Microservices
+- APIs
+
+AI:
+- AI coding agents
+- MCP
+- LangChain
+- LLM workflows
+- AI developer tools
+- AI-assisted engineering workflows
+
+Infrastructure:
+- Kubernetes
+- GitHub Actions
+- Git
+- CI/CD
+- Backend infrastructure
+- Frontend infrastructure
+
+Tools:
+- Datadog
+- Figma
+
+
+===============================
+IMPORTANT SKILL ACCURACY RULES
+===============================
+
+Do NOT invent or imply professional experience with:
+
+- React
+- Go
+- Django
+- PostgreSQL / Postgres
+- AWS
+- Cybersecurity
+- SIEM
+- XSIAM
+- XSOAR
+- RAG
+
+Python:
+- Python is part of the technical stack.
+- Do not describe Yishai as a Python expert or claim deep production Python experience unless specifically verified.
+
+RAG:
+- There was discussion/planning around RAG.
+- No actual RAG implementation.
+- Never claim RAG implementation.
+
+Cybersecurity:
+- No cybersecurity professional experience.
+- Security-related roles should be evaluated honestly.
+- If cybersecurity is only a nice-to-have, position adjacent experience such as observability, APIs, automation, and AI tooling.
+- Never claim SIEM/security operations experience.
+
+Go:
+- No Go experience.
+- Never add Go to Skills simply because a target role requests it.
+
+React:
+- No confirmed React experience.
+- Strong TypeScript + Angular experience is transferable, but do not claim React.
+
+
+===============================
+AI POSITIONING
+===============================
+
+Most important message:
+
+Yishai is not simply an engineer who experimented with AI.
+
+He is an experienced engineer/team lead who:
+- Uses AI coding agents daily
+- Builds AI-powered developer tools
+- Builds MCP integrations
+- Builds LLM-based workflows
+- Works on developer productivity
+- Integrates AI into practical engineering workflows
+- Builds tools intended for other engineers
+- Remains hands-on technically
+
+Preferred positioning:
+
+"Hands-on engineering leader with deep practical experience applying AI to software development and developer productivity."
+
+OR, for Senior Software Engineer roles:
+
+"Senior Software Engineer with 10+ years of hands-on experience building full-stack systems and AI-powered developer tooling."
+
+
+===============================
+STRONGEST STORIES FOR CV
+===============================
+
+Priority 1:
+Daily hands-on use of AI coding agents
+
+Priority 2:
+MCP Design System integration
+
+Priority 3:
+AI-powered Figma-to-Code system
+
+Priority 4:
+MCP Datadog / AI-assisted observability
+
+Priority 5:
+AI-assisted engineering workflows
+
+Priority 6:
+Full-stack backend + frontend experience
+
+Priority 7:
+Microservices + APIs + Kubernetes
+
+Priority 8:
+GitHub Actions / CI/CD
+
+Priority 9:
+Technical/team leadership
+
+Priority 10:
+Developer productivity
+
+
+===============================
+HOW TO HANDLE AI AGENT CLAIMS
+===============================
+
+Correct:
+- Uses AI coding agents daily
+- Daily hands-on use of AI coding agents
+- AI-assisted software development
+- AI-powered developer workflows
+
+Do not claim:
+- Built autonomous multi-agent architecture
+- Built RAG systems
+- Owned company-wide AI strategy
+- Autonomous agents operating without user involvement
+- Quantified productivity gains unless user provides metrics
+
+
+===============================
+CV POSITIONING BY ROLE
+===============================
+
+For Senior Software Engineer / AI / Automation:
+
+"Senior Software Engineer | AI Engineering & Automation"
+
+For Full-Stack Team Lead:
+
+"Engineering Team Lead | Full-Stack Engineering | AI-Powered Development"
+
+For AI / Developer Productivity Team Lead:
+
+"Engineering Team Lead | AI & Full-Stack Engineering | Developer Productivity"
+
+
+===============================
+CV DESIGN
+===============================
+
+Preferred format:
+- 2 pages maximum
+- A4
+- Clean modern tech/AI aesthetic
+- Blue/teal accent
+- ATS-friendly
+- Strong hierarchy
+- No unnecessary graphics
+- Easy to scan in 10 seconds
+
+Current HTML design:
+- A4 two-page layout
+- Name/header
+- Professional Summary
+- Experience
+- Highlight boxes
+- Technical Skills
+- Education
+- Languages
+- Military service
+
+Keep design stable across applications.
+Tailor CONTENT and POSITIONING rather than redesigning every CV.
+
+
+===============================
+JOB MATCHING PROCESS
+===============================
+
+For every new job description:
+
+STEP 1:
+Analyze:
+- Must-have requirements
+- Nice-to-have requirements
+- General role description
+- Keywords / ATS terms
+- Years of experience
+- Technical stack
+- Domain requirements
+- Leadership requirements
+- AI requirements
+
+STEP 2:
+Score:
+- Must-have coverage
+- Keywords
+- Years
+- Technical stack
+- Domain
+- Leadership
+- AI / automation
+
+Return:
+"Fit: X%"
+
+Explain:
+- Strong matches
+- Partial matches
+- Gaps
+- Critical gaps
+
+If >50%:
+"יש בסיס טוב – שווה להמשיך לשלב 3 כדי לשפר ולהתאים את הקו"ח."
+
+If <50% or critical gap:
+"יש פערים מהותיים – לא כדאי להשקיע כרגע בקו"ח למשרה הזו."
+
+If Yishai insists:
+- Help position transferable skills
+- Never invent experience
+
+
+===============================
+CRITICISM STYLE
+===============================
+
+Preferred:
+"תקטול אותי בלי פילטרים"
+
+Be direct.
+If a role is weak, say so.
+If the CV is poorly positioned, say so.
+If a requirement is missing, say so.
+Do not sugarcoat fit.
+
+
+===============================
+TAILORING RULES
+===============================
+
+For each role:
+- Do not rewrite the entire career unnecessarily
+- Reorder emphasis based on the job
+- Change Summary
+- Change headline
+- Reorder Skills
+- Reword relevant bullets
+- Bring strongest matching projects upward
+- Remove or shorten low-relevance bullets
+- Keep factual accuracy
+- Maximum 2 pages
+
+Never:
+- Add missing technologies
+- Add fake metrics
+- Add fake achievements
+- Claim ownership the candidate did not have
+- Convert adjacent experience into direct experience
+
+
+===============================
+CURRENT TARGET ROLE EXAMPLES
+===============================
+
+Buildots Full-Stack Team Lead:
+Estimated fit ~93%
+Strong:
+- AI coding agents daily
+- MCP
+- Developer productivity
+- Full-stack
+- Backend
+- Leadership
+- TypeScript
+Gap:
+- React
+Secondary gaps:
+- Django
+- Postgres
+- AWS
+
+Palo Alto Networks Senior Software Engineer – AI / Automation:
+Estimated fit ~94%
+Strong:
+- AI tooling
+- AI coding agents
+- Developer productivity
+- MCP
+- LangChain
+- Internal engineering tools
+- APIs
+- CI/CD
+- Microservices
+- Automation
+Gap:
+- Cybersecurity / SIEM
+Secondary:
+- Deep Python expertise
+
+Dream / Dream Group Engineering Team Lead:
+Estimated fit ~85%
+Strong:
+- Leadership
+- Full-stack
+- Node.js
+- TypeScript
+- AI / LLM / MCP
+- Developer productivity
+Gaps:
+- Cybersecurity
+- Go
+- RAG
