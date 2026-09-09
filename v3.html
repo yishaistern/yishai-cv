@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yishai Stern - Engineering Team Lead | AI & Full-Stack Engineering</title>
+
+<style>
+  :root{
+    --sidebar-bg:rgba(30,45,64,1);
+    --sidebar-bg-2:rgba(30,45,64,1);
+    --accent-blue:#497fa5;
+    --accent-blue-soft:#8FA8D9;
+    --content-bg:#FFFFFF;
+    --page-bg:#EDF0F5;
+    --navy-text:#141B36;
+    --gray-text:#4a5568;
+    --gray-light:#8A93AE;
+    --border-light:#E4E8F1;
+    --badge-bg:#E7F1FE;
+    --badge-text:#1E4E8C;
+  }
+
+  *{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+  }
+
+  body{
+    font-family:'Figtree','Segoe UI',Arial,sans-serif;
+    background:var(--page-bg);
+    color:var(--navy-text);
+    -webkit-print-color-adjust:exact !important;
+    print-color-adjust:exact !important;
+  }
+
+  a{
+    color:inherit;
+    text-decoration:none;
+  }
+
+  .page{
+    max-width:210mm;
+    margin:40px auto;
+    background:var(--content-bg);
+    box-shadow:0 10px 40px rgba(10,20,50,0.12);
+    border-radius:4px;
+    overflow:hidden;
+    display:grid;
+    grid-template-columns:minmax(200px,250px) 1fr;
+  }
+
+  /* ===================== SIDEBAR ===================== */
+
+  .sidebar{
+    background:linear-gradient(
+      180deg,
+      var(--sidebar-bg) 0%,
+      var(--sidebar-bg-2) 100%
+    );
+    color:#FFFFFF;
+    padding:48px 20px 48px;
+    min-width:0;
+  }
+
+  .name{
+    font-weight:700;
+    font-size:30px;
+    line-height:1.1;
+  }
+
+  .name .first{
+    color:#FFFFFF;
+    display:block;
+  }
+
+  .name .last{
+    color:var(--accent-blue);
+    display:block;
+  }
+
+  .role-title{
+    margin-top:16px;
+    font-size:13px;
+    font-weight:500;
+    color:#DCE4F5;
+    line-height:1.5;
+  }
+
+  .accent-line{
+    width:46px;
+    height:3px;
+    background:var(--accent-blue);
+    border-radius:2px;
+    margin:22px 0;
+  }
+
+  .side-section{
+    margin-bottom:34px;
+  }
+
+  .side-section:last-child{
+    margin-bottom:0;
+  }
+
+  .side-label{
+    font-size:11.5px;
+    font-weight:700;
+    letter-spacing:1.6px;
+    text-transform:uppercase;
+    color:var(--accent-blue-soft);
+    margin-bottom:16px;
+  }
+
+  .contact-row{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    font-size:12px;
+    color:#E4E9F7;
+    margin-bottom:12px;
+  }
+
+  .contact-row:last-child{
+    margin-bottom:0;
+  }
+
+  .contact-icon{
+    width:20px;
+    height:20px;
+    flex-shrink:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:var(--accent-blue);
+    font-size:12px;
+    font-weight:700;
+    border:1px solid rgba(255,255,255,0.25);
+    border-radius:4px;
+  }
+
+  .contact-row a{
+    word-break:break-all;
+  }
+
+  .tag-list{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+  }
+
+  .tag{
+    border:1px solid #ffa559;
+    color:#F0F3FC;
+    background:rgba(255,255,255,0.04);
+    font-size:10px;
+    font-weight:300;
+    padding:6px 8px;
+    border-radius:6px;
+  }
+
+  .edu-name{
+    font-size:14px;
+    font-weight:700;
+    color:#FFFFFF;
+    margin-bottom:4px;
+  }
+
+  .edu-detail{
+    font-size:13px;
+    color:#C9D2EA;
+    line-height:1.5;
+  }
+
+  .edu-place{
+    font-size:12.5px;
+    color:var(--accent-blue-soft);
+    margin-top:2px;
+  }
+
+  .lang-row{
+    display:flex;
+    justify-content:space-between;
+    font-size:13.5px;
+    color:#E4E9F7;
+    padding:5px 0;
+  }
+
+  .lang-row em{
+    color:#B9C4E2;
+    font-style:italic;
+    font-weight:400;
+  }
+
+  .lang-row span{
+    font-weight:700;
+    color:#FFFFFF;
+  }
+
+  .mil-name{
+    font-size:14px;
+    font-weight:700;
+    color:#FFFFFF;
+    margin-bottom:4px;
+  }
+
+  .mil-detail{
+    font-size:13px;
+    color:#C9D2EA;
+  }
+
+  /* ===================== MAIN CONTENT ===================== */
+
+  .content{
+    padding:35px 35px 35px;
+    min-width:0;
+  }
+
+  .top-accent{
+    width:52px;
+    height:4px;
+    background:var(--accent-blue);
+    border-radius:2px;
+    margin-bottom:15px;
+  }
+
+  .summary{
+    font-size:15px;
+    line-height:1.6;
+    color:var(--gray-text);
+    margin-bottom:28px;
+  }
+
+  .section-heading{
+    font-size:12.5px;
+    font-weight:700;
+    letter-spacing:1.8px;
+    text-transform:uppercase;
+    color:var(--accent-blue);
+    margin-bottom:22px;
+    padding-bottom:10px;
+    border-bottom:1px solid var(--border-light);
+  }
+
+  .job{
+    margin-bottom:30px;
+  }
+
+  .job:last-child{
+    margin-bottom:0;
+  }
+
+  .job-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:12px;
+    margin-bottom:8px;
+  }
+
+  .job-title{
+    font-size:19px;
+    font-weight:700;
+    color:var(--navy-text);
+  }
+
+  .date-badge{
+    background:var(--badge-bg);
+    color:var(--badge-text);
+    font-size:12.5px;
+    font-weight:700;
+    padding:5px 14px;
+    border-radius:6px;
+    white-space:nowrap;
+    margin-top:2px;
+  }
+
+  .company-row{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin-bottom:12px;
+  }
+
+  .company-icon{
+    width:20px;
+    height:20px;
+    border-radius:5px;
+    object-fit:contain;
+    flex-shrink:0;
+  }
+
+  .company-name{
+    font-size:14.5px;
+    font-weight:700;
+    color:var(--gray-text);
+  }
+
+  .job ul{
+    list-style:none;
+  }
+
+  .job ul li{
+    position:relative;
+    padding-left:18px;
+    margin-bottom:4px;
+    font-size:14.2px;
+    line-height:1.4;
+    color:var(--gray-text);
+  }
+
+  .job ul li:last-child{
+    margin-bottom:0;
+  }
+
+  .job ul li::before{
+    content:"";
+    position:absolute;
+    left:2px;
+    top:8px;
+    width:5px;
+    height:5px;
+    border-radius:50%;
+    background:var(--accent-blue);
+  }
+
+  .job ul li strong{
+    color:var(--navy-text);
+  }
+
+  .sub-heading{
+    font-size:14px;
+    font-weight:700;
+    color:var(--navy-text);
+    margin:15px 0 9px;
+  }
+
+  .highlight{
+    margin:14px 0 0;
+    padding:12px 14px;
+    background:#F4F8FC;
+    border-left:3px solid var(--accent-blue);
+    border-radius:3px;
+    font-size:13.5px;
+    line-height:1.55;
+    color:var(--gray-text);
+  }
+
+  .highlight strong{
+    color:var(--navy-text);
+  }
+
+  .page-break{
+    break-before:page;
+    page-break-before:always;
+  }
+
+  .download-html{
+    position:fixed;
+    right:20px;
+    bottom:20px;
+    z-index:10;
+    border:0;
+    border-radius:999px;
+    padding:12px 18px;
+    background:var(--sidebar-bg);
+    color:#fff;
+    font:600 14px/1 'Figtree','Segoe UI',Arial,sans-serif;
+    box-shadow:0 6px 18px rgba(10,20,50,.22);
+    cursor:pointer;
+  }
+
+  @media (max-width:768px){
+    .page{
+      grid-template-columns:1fr;
+      margin:20px;
+      border-radius:8px;
+    }
+
+    .content{
+      padding:32px 20px;
+    }
+
+    .sidebar{
+      padding:32px 20px;
+    }
+  }
+
+  @page{
+    size:A4;
+    margin:0;
+  }
+
+  @media print{
+    html,
+    body{
+      width:210mm;
+      margin:0;
+      background:#fff;
+    }
+
+    body{
+      background:#fff;
+    }
+
+    .page{
+      width:210mm;
+      max-width:none;
+      box-shadow:none;
+      margin:0;
+      border-radius:0;
+      grid-template-columns:minmax(200px,250px) 1fr;
+    }
+
+    .download-html{
+      display:none;
+    }
+  }
+</style>
+</head>
+
+<body>
+
+<div class="page">
+
+  <!-- ===================== SIDEBAR ===================== -->
+
+  <aside class="sidebar">
+
+    <div class="name">
+      <span class="first">Yishai</span>
+      <span class="last">Stern</span>
+    </div>
+
+    <div class="role-title">
+      Engineering Team Lead<br>
+      AI &amp; Full-Stack Engineering
+    </div>
+
+    <div class="accent-line"></div>
+
+    <div class="side-section">
+      <div class="side-label">Contact</div>
+
+      <div class="contact-row">
+        <span class="contact-icon">@</span>
+        <a href="mailto:sternyishai@gmail.com">
+          sternyishai@gmail.com
+        </a>
+      </div>
+
+      <div class="contact-row">
+        <span class="contact-icon">T</span>
+        <span>052-555-0646</span>
+      </div>
+
+      <div class="contact-row">
+        <span class="contact-icon">in</span>
+        <a
+          href="https://linkedin.com/in/yishai-stern-a80ba857"
+          target="_blank"
+          rel="noopener"
+        >
+          linkedin.com/in/yishai-stern-a80ba857
+        </a>
+      </div>
+    </div>
+
+
+    <div class="side-section">
+      <div class="side-label">Tech Stack</div>
+
+      <div class="tag-list">
+        <span class="tag">AI / LLM</span>
+        <span class="tag">MCP</span>
+        <span class="tag">LangChain</span>
+        <span class="tag">AI Agents</span>
+        <span class="tag">TypeScript</span>
+        <span class="tag">Angular</span>
+        <span class="tag">Node.js</span>
+        <span class="tag">Python</span>
+        <span class="tag">JavaScript</span>
+        <span class="tag">Microservices</span>
+        <span class="tag">APIs</span>
+        <span class="tag">Kubernetes</span>
+        <span class="tag">GitHub Actions</span>
+        <span class="tag">CI/CD</span>
+        <span class="tag">NGRX</span>
+        <span class="tag">SQL</span>
+        <span class="tag">MongoDB</span>
+        <span class="tag">Redis</span>
+        <span class="tag">Datadog</span>
+        <span class="tag">Git</span>
+      </div>
+    </div>
+
+
+    <div class="side-section">
+      <div class="side-label">Education</div>
+
+      <div class="edu-name">
+        Ben-Gurion University
+      </div>
+
+      <div class="edu-detail">
+        B.Sc. Information Systems Engineering &amp; Software
+      </div>
+
+      <div class="edu-place">
+        Beer Sheva
+      </div>
+    </div>
+
+
+    <div class="side-section">
+      <div class="side-label">Languages</div>
+
+      <div class="lang-row">
+        <span>Hebrew</span>
+        <em>Native</em>
+      </div>
+
+      <div class="lang-row">
+        <span>English</span>
+        <em>Native</em>
+      </div>
+    </div>
+
+
+    <div class="side-section">
+      <div class="side-label">Military Service</div>
+
+      <div class="mil-name">
+        Soldier &amp; Commander
+      </div>
+
+      <div class="mil-detail">
+        Nahal Brigade &middot; 2008&ndash;2010
+      </div>
+    </div>
+
+  </aside>
+
+
+  <!-- ===================== MAIN CONTENT ===================== -->
+
+  <main class="content">
+
+    <div class="top-accent"></div>
+
+    <p class="summary">
+      Hands-on Engineering Team Lead with 10+ years of software engineering
+      experience across full-stack development, backend systems, and technical
+      leadership. In recent years, focused on building AI-powered developer
+      tools, LLM-based workflows, MCP integrations, and engineering automation.
+      Experienced in leading engineers while staying deeply involved in
+      architecture, implementation, and delivery across frontend, backend,
+      APIs, microservices, and infrastructure.
+    </p>
+
+
+    <div class="section-heading">
+      Experience
+    </div>
+
+
+    <!-- ===================== ZOOMINFO 2024 ===================== -->
+
+    <div class="job">
+
+      <div class="job-top">
+        <div class="job-title">
+          Team Lead, Software Engineering
+        </div>
+
+        <div class="date-badge">
+          2024 &ndash; Present
+        </div>
+      </div>
+
+      <div class="company-row">
+        <img
+          src="images/zoominfo.png"
+          alt="ZoomInfo"
+          class="company-icon"
+        >
+
+        <span class="company-name">
+          ZoomInfo &mdash; Productivity Engineering
+        </span>
+      </div>
+
+      <ul>
+
+        <li>
+          Lead a Productivity Engineering team of
+          <strong>4 engineers</strong>, while remaining hands-on in building
+          AI-powered developer tools and productivity platforms.
+        </li>
+
+        <li>
+          Work hands-on with
+          <strong>AI coding agents</strong> as part of daily software
+          development and engineering workflows.
+        </li>
+
+        <li>
+          Build AI-assisted engineering workflows using
+          <strong>LLMs and MCP integrations</strong>, with workflows initiated
+          either by engineers or automatically triggered by engineering
+          metrics.
+        </li>
+
+      </ul>
+
+
+      <div class="sub-heading">
+        Key AI &amp; Developer Productivity Initiatives
+      </div>
+
+      <ul>
+
+        <li>
+          <strong>Engineering AI Workflows:</strong>
+          developed and iterated on practical AI-powered workflows and multi agent system based on
+          real engineering needs and usage.
+        </li>
+
+        <li>
+          <strong>MCP for Internal Design System:</strong>
+          built an MCP integration connected to the UI monorepo, enabling
+          engineers across UI teams to query, interact with, and update
+          Design System components through AI-assisted development.
+        </li>
+
+        <!-- <li>
+          <strong>Figma-to-Code:</strong>
+          built a system that generates production-ready frontend components
+          directly from design files, accelerating the path from design to
+          implementation.
+        </li> -->
+
+        <li>
+          <strong>MCP for Datadog:</strong>
+          built an integration enabling AI-assisted log analysis and
+          observability workflows.
+        </li>
+
+      </ul>
+
+
+      <div class="highlight">
+        <strong>Hands-on AI leadership:</strong>
+        worked closely with engineering teams to develop, test, adopt and
+        continuously improve AI-powered tools and workflows while staying
+        directly involved in implementation and technical decisions.
+      </div>
+
+    </div>
+
+
+    <!-- ===================== ZOOMINFO 2020-2024 ===================== -->
+
+    <div class="job">
+
+      <div class="job-top">
+        <div class="job-title">
+          Team Leader &mdash; Full-Stack Engineering
+        </div>
+
+        <div class="date-badge">
+          2020 &ndash; 2024
+        </div>
+      </div>
+
+      <div class="company-row">
+        <img
+          src="images/zoominfo.png"
+          alt="ZoomInfo"
+          class="company-icon"
+        >
+
+        <span class="company-name">
+          ZoomInfo
+        </span>
+      </div>
+
+      <ul>
+
+        <li>
+          Led end-to-end delivery of full-stack features across
+          <strong>frontend, backend microservices, APIs, and databases</strong>
+          serving enterprise customers at scale.
+        </li>
+
+        <li>
+          Built and maintained backend microservices and APIs, including
+          deployment and operation on <strong>Kubernetes</strong>.
+        </li>
+
+        <li>
+          Migrated CI/CD workflows to
+          <strong>GitHub Actions</strong> based on engineering and delivery
+          needs.
+        </li>
+
+        <li>
+          Drove architecture decisions and worked cross-functionally with
+          Product, Design, and QA.
+        </li>
+
+        <li>
+          Established a strong engineering culture around quality and
+          reliability, including early adoption of unit testing practices.
+        </li>
+
+      </ul>
+
+    </div>
+    <!-- ===================== PAGE 2 ===================== -->
+
+    <div class="page-break" style="padding-top: 25px;"></div>
+
+    <!-- ===================== ZOOMINFO 2020 ===================== -->
+
+    <div class="job">
+
+      <div class="job-top">
+        <div class="job-title">
+          Full-Stack Engineer
+        </div>
+
+        <div class="date-badge">
+          2020
+        </div>
+      </div>
+
+      <div class="company-row">
+        <img
+          src="images/zoominfo.png"
+          alt="ZoomInfo"
+          class="company-icon"
+        >
+
+        <span class="company-name">
+          ZoomInfo
+        </span>
+      </div>
+
+      <ul>
+
+        <li>
+          Built and maintained full-stack products involving complex business
+          logic, APIs, frontend applications, and large-scale data operations.
+        </li>
+
+        <li>
+          Worked across
+          <strong>Angular, TypeScript, Node.js, and SQL</strong>.
+        </li>
+
+        <li>
+          Became the first engineer at ZoomInfo to implement unit testing
+          practices, helping establish a foundation for broader automated
+          testing.
+        </li>
+
+      </ul>
+
+    </div>
+
+
+    <!-- ===================== BROADRIDGE ===================== -->
+
+    <div class="job">
+
+      <div class="job-top">
+        <div class="job-title">
+          Front-End Developer
+        </div>
+
+        <div class="date-badge">
+          2018 &ndash; 2020
+        </div>
+      </div>
+
+      <div class="company-row">
+
+        <img
+          src="images/brodrigge.jpeg"
+          alt="Broadridge"
+          class="company-icon"
+        >
+
+        <span class="company-name">
+          Broadridge Financial Solutions
+        </span>
+
+      </div>
+
+      <ul>
+
+        <li>
+          Developed Angular-based financial applications for major US clients.
+        </li>
+
+        <li>
+          Implemented state management using
+          <strong>NGRX Store</strong> and contributed to unit testing.
+        </li>
+
+        <li>
+          Participated in architectural decisions and system performance
+          improvements.
+        </li>
+
+        <li>
+          Collaborated closely with a distributed QA team based in
+          <strong>India</strong>.
+        </li>
+
+      </ul>
+
+    </div>
+
+
+    <!-- ===================== CAMBIUM ===================== -->
+
+    <div class="job">
+
+      <div class="job-top">
+        <div class="job-title">
+          Front-End Developer
+        </div>
+
+        <div class="date-badge">
+          2013 &ndash; 2018
+        </div>
+      </div>
+
+      <div class="company-row">
+
+        <img
+          src="images/cambium.jpeg"
+          alt="Cambium"
+          class="company-icon"
+        >
+
+        <span class="company-name">
+          Cambium (acquired by Matrix)
+        </span>
+
+      </div>
+
+      <ul>
+
+        <li>
+          Developed multiple mobile and web applications including
+          <strong>Next Star</strong>, <strong>Or Yarok</strong>, and
+          <strong>LaMetayel Checklist</strong>.
+        </li>
+
+        <li>
+          Built CMS platforms for
+          <strong>Sport5</strong> and <strong>Channel 13</strong>,
+          including user and content management systems.
+        </li>
+
+        <li>
+          Developed responsive web applications for real-estate startups and
+          <strong>Channel 13</strong>.
+        </li>
+
+        <li>
+          Implemented server-side rendering for
+          <strong>Channel 10's</strong> website.
+        </li>
+
+      </ul>
+
+    </div>
+
+
+    <!-- ===================== ADDITIONAL STRENGTHS ===================== -->
+
+    <div class="section-heading" style="margin-top:34px;">
+      Core Strengths
+    </div>
+
+    <div class="highlight">
+      <strong>AI Engineering:</strong>
+      AI coding agents, LLM workflows, MCP integrations, AI-powered developer
+      tooling, engineering automation.
+    </div>
+
+    <div class="highlight">
+      <strong>Full-Stack Engineering:</strong>
+      Angular, TypeScript, Node.js, APIs, microservices, databases and
+      infrastructure.
+    </div>
+
+    <div class="highlight">
+      <strong>Technical Leadership:</strong>
+      team leadership, architecture, technical planning, mentoring,
+      cross-functional collaboration and hands-on delivery.
+    </div>
+
+    <div class="highlight">
+      <strong>Engineering Infrastructure:</strong>
+      Kubernetes, CI/CD, GitHub Actions, Git, observability and
+      developer productivity.
+    </div>
+
+  </main>
+
+</div>
+
+
+<button
+  class="download-html"
+  type="button"
+  data-download-pdf
+>
+  Download PDF
+</button>
+
+
+<script>
+  document
+    .querySelector('[data-download-pdf]')
+    .addEventListener('click', () => window.print());
+</script>
+
+</body>
+</html>
