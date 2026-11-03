@@ -1,0 +1,8 @@
+{
+  // `tsconfig.json` type-checks everything, tests included (with Node types).
+  // This one emits dist/ without the tests, and without Node types: the library
+  // also runs in the browser, so it must not use Node APIs.
+  "extends": "./tsconfig.json",
+  "compilerOptions": { "types": [] },
+  "exclude": ["src/**/*.test.ts"]
+}

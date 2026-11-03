@@ -17,6 +17,7 @@ export function useElementSize<E extends HTMLElement>() {
     const el = ref.current;
     if (!el) return;
     const observer = new ResizeObserver(([entry]) => {
+      if (!entry) return;
       const { width, height } = entry.contentRect;
       // Only set state when the size really changed, to avoid useless re-renders.
       setSize((prev) => (prev.width === width && prev.height === height ? prev : { width, height }));

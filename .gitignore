@@ -1,34 +1,22 @@
-# Angular specific
-/dist/
-/out-tsc/
-/tmp/
-/coverage/
-/e2e/test-output/
-/.angular/
-.angular/
-
-# Node modules and dependency files
+# Dependencies
 node_modules/
-/yarn.lock
 
-# Environment files
-/.env
-
-# Angular CLI and build artefacts
-/.angular-cli.json
-/.ng/
-
-# TypeScript cache
+# Build output and caches
+dist/
 *.tsbuildinfo
+/.nx/
+/coverage/
+
+# Local data: the SQLite database lives here (see apps/api/src/paths.ts)
+/apps/api/data/
+
+# Environment
+.env
+.env.*
 
 # Logs
 npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
 
-#playright
+# Tools
 /.playwright-mcp/
-# Nx monorepo
-dist/
-/apps/api/data/
-/.nx/
+.DS_Store
