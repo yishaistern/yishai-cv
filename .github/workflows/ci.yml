@@ -25,6 +25,10 @@ jobs:
           node-version-file: .nvmrc
           cache: npm
 
+      # Node ships an older npm than the one package.json requires (engine-strict),
+      # so install the exact version pinned in "packageManager".
+      - run: npm install -g "$(node -p "require('./package.json').packageManager")"
+
       - run: npm ci
 
       # oxlint, then typecheck + test + build for every Nx project.
