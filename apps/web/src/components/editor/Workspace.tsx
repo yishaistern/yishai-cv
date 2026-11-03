@@ -22,6 +22,7 @@ import {
   ContactSection,
   EducationSection,
   HeaderSection,
+  LanguageSection,
   MilitarySection,
   SummarySection,
 } from './sections/BasicSections.tsx';
@@ -186,6 +187,7 @@ export function Workspace({ version, onSaved, onReplaced, onDirtyChange }: Works
           />
 
           <h3 className="editor-col__group-title">CV content</h3>
+          <LanguageSection language={data.language ?? 'en'} dispatch={dispatch} />
           <HeaderSection header={data.header} dispatch={dispatch} />
           <SummarySection summary={data.summary} dispatch={dispatch} />
           <SkillsSection skills={data.skills} dispatch={dispatch} />

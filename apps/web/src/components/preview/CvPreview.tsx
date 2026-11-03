@@ -1,9 +1,36 @@
 import { Fragment } from 'react';
-import type { CvData, Job, BulletGroup, Highlight } from '@yishai-cv/shared';
+import type { CvData, CvLanguage, Job, BulletGroup, Highlight } from '@yishai-cv/shared';
 import { Markup } from './Markup.tsx';
 // Importing a CSS file from a component makes Vite bundle it with the app.
 // All rules inside are scoped under .cv-root (see cv.css).
 import './cv.css';
+
+// ------------------------------------------------------------
+// Fixed section headings, per CV language
+// ------------------------------------------------------------
+
+const LABELS = {
+  en: {
+    contact: 'Contact',
+    techStack: 'Tech Stack',
+    education: 'Education',
+    languages: 'Languages',
+    military: 'Military Service',
+    experience: 'Experience',
+    strengths: 'Core Strengths',
+  },
+  he: {
+    contact: 'פרטי קשר',
+    techStack: 'טכנולוגיות',
+    education: 'השכלה',
+    languages: 'שפות',
+    military: 'שירות צבאי',
+    experience: 'ניסיון תעסוקתי',
+    strengths: 'חוזקות מרכזיות',
+  },
+} satisfies Record<CvLanguage, Record<string, string>>;
+
+type Labels = (typeof LABELS)['en'];
 
 // ------------------------------------------------------------
 // Small helpers
@@ -29,7 +56,7 @@ function withColon(label: string): string {
 // Sidebar (left dark column)
 // ------------------------------------------------------------
 
-function Sidebar({ data }: { data: CvData }) {
+function Sidebar({ data, t }: { data: CvData; t: Labels }) {
   const { header, contact, skills, education, languages, military } = data;
 
   return (
@@ -53,28 +80,28 @@ function Sidebar({ data }: { data: CvData }) {
       <div className="accent-line"></div>
 
       <div className="side-section">
-        <div className="side-label">Contact</div>
+        <div className="side-label">{t.contact}</div>
 
         <div className="contact-row">
           <span className="contact-icon">@</span>
-          <a href={`mailto:${contact.email}`}>{contact.email}</a>
+          <a href={`mailto:${contact.email}`} dir="ltr">{contact.email}</a>
         </div>
 
         <div className="contact-row">
           <span className="contact-icon">T</span>
-          <span>{contact.phone}</span>
+          <span dir="ltr">{contact.phone}</span>
         </div>
 
         <div className="contact-row">
           <span className="contact-icon">in</span>
-          <a href={contact.linkedin} target="_blank" rel="noopener">
+          <a href={contact.linkedin} target="_blank" rel="noopener" dir="ltr">
             {stripProtocol(contact.linkedin)}
           </a>
         </div>
       </div>
 
       <div className="side-section">
-        <div className="side-label">Tech Stack</div>
+        <div className="side-label">{t.techStack}</div>
         <div className="tag-list">
           {/* .filter() drops hidden items, then .map() turns each one into JSX.
               We use the item's stable `id` as the key (better than the index,
@@ -90,14 +117,14 @@ function Sidebar({ data }: { data: CvData }) {
       </div>
 
       <div className="side-section">
-        <div className="side-label">Education</div>
+        <div className="side-label">{t.education}</div>
         <div className="edu-name">{education.school}</div>
         <div className="edu-detail">{education.degree}</div>
         <div className="edu-place">{education.place}</div>
       </div>
 
       <div className="side-section">
-        <div className="side-label">Languages</div>
+        <div className="side-label">{t.languages}</div>
         {languages.map((lang) => (
           <div key={lang.id} className="lang-row">
             <span>{lang.name}</span>
@@ -107,7 +134,7 @@ function Sidebar({ data }: { data: CvData }) {
       </div>
 
       <div className="side-section">
-        <div className="side-label">Military Service</div>
+        <div className="side-label">{t.military}</div>
         <div className="mil-name">{military.title}</div>
         <div className="mil-detail">{military.detail}</div>
       </div>
@@ -187,11 +214,15 @@ function JobBlock({ job }: { job: Job }) {
 export function CvPreview({ data }: { data: CvData }) {
   const jobs = data.jobs.filter((job) => !job.hidden);
   const strengths = data.strengths.filter((s) => !s.hidden);
+  const lang = data.language ?? 'en';
+  const t = LABELS[lang];
 
   return (
-    <div className="cv-root">
+    // dir="rtl" flips the whole layout for Hebrew: sidebar on the right, bullets on the right, etc.
+    // cv.css uses logical properties (padding-inline-start…) so it works both ways.
+    <div className="cv-root" lang={lang} dir={lang === 'he' ? 'rtl' : 'ltr'}>
       <div className="page">
-        <Sidebar data={data} />
+        <Sidebar data={data} t={t} />
 
         <main className="content">
           <div className="top-accent"></div>
@@ -200,7 +231,7 @@ export function CvPreview({ data }: { data: CvData }) {
             <Markup text={data.summary} />
           </p>
 
-          <div className="section-heading">Experience</div>
+          <div className="section-heading">{t.experience}</div>
 
           {jobs.map((job) => (
             // A Fragment with a key lets one array item render two siblings
@@ -216,7 +247,7 @@ export function CvPreview({ data }: { data: CvData }) {
           {strengths.length > 0 && (
             <>
               <div className="section-heading" style={{ marginTop: 34 }}>
-                Core Strengths
+                {t.strengths}
               </div>
               {strengths.map((s) => (
                 <HighlightBox key={s.id} highlight={s} />

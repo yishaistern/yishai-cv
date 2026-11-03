@@ -2,6 +2,7 @@
 // They implement the shared contract types so the API and the web app can't drift apart.
 import { Transform } from 'class-transformer';
 import {
+  IsIn,
   IsInt,
   IsNotEmpty,
   IsOptional,
@@ -11,7 +12,7 @@ import {
   ValidatorConstraint,
   type ValidatorConstraintInterface,
 } from 'class-validator';
-import type { CreateVersionBody, CvData, UpdateVersionBody } from '@yishai-cv/shared';
+import { CV_LANGUAGES, type CreateVersionBody, type CvData, type CvLanguage, type UpdateVersionBody } from '@yishai-cv/shared';
 
 const trim = ({ value }: { value: unknown }) => (typeof value === 'string' ? value.trim() : value);
 
@@ -59,6 +60,11 @@ export class CreateVersionDto implements CreateVersionBody {
   @IsInt({ message: '"fromVersionId" must be a positive integer' })
   @Min(1, { message: '"fromVersionId" must be a positive integer' })
   fromVersionId?: number;
+
+  /** When not duplicating: start from the English or the Hebrew base CV. */
+  @IsOptional()
+  @IsIn(CV_LANGUAGES, { message: `"language" must be one of: ${CV_LANGUAGES.join(', ')}` })
+  language?: CvLanguage;
 }
 
 export class UpdateVersionDto implements UpdateVersionBody {

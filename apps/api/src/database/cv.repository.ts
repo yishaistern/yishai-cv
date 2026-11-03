@@ -8,6 +8,7 @@ import { mkdirSync } from 'node:fs';
 import { dirname } from 'node:path';
 import {
   baseCv,
+  baseCvHe,
   type CvData,
   type Revision,
   type RevisionSummary,
@@ -79,6 +80,7 @@ export interface VersionPatch {
 }
 
 export const BASE_VERSION_NAME = 'Base CV';
+export const BASE_VERSION_NAME_HE = 'Base CV (Hebrew)';
 
 @Injectable()
 export class CvRepository implements OnModuleInit, OnModuleDestroy {
@@ -150,10 +152,13 @@ export class CvRepository implements OnModuleInit, OnModuleDestroy {
     };
   }
 
-  /** First run: an empty database gets the Base CV so the dashboard has something to show. */
+  /** First run: an empty database gets the base CVs so the dashboard has something to show. */
   onModuleInit(): void {
     const { count } = this.db.prepare('SELECT COUNT(*) AS count FROM versions').get() as { count: number };
-    if (count === 0) this.insertBaseVersion();
+    if (count === 0) {
+      this.insertBaseVersion();
+      this.insertHebrewBaseVersion();
+    }
   }
 
   onModuleDestroy(): void {
@@ -282,6 +287,15 @@ export class CvRepository implements OnModuleInit, OnModuleDestroy {
       description: 'Master version transcribed from v3.html',
       data: baseCv,
       note: 'Initial import',
+    });
+  }
+
+  insertHebrewBaseVersion(): Version {
+    return this.createVersion({
+      name: BASE_VERSION_NAME_HE,
+      description: 'Hebrew translation of the Base CV (right-to-left layout)',
+      data: baseCvHe,
+      note: 'Initial import (Hebrew)',
     });
   }
 

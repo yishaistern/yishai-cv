@@ -100,6 +100,23 @@ function Dashboard() {
     }
   }
 
+  /** One-click copy of a version (its last SAVED data) — handy before tailoring it for another job. */
+  async function handleDuplicate(id: number) {
+    const source = versions.find((x) => x.id === id);
+    if (!source) return;
+    try {
+      await handleCreate({
+        name: `${source.name} (copy)`,
+        targetCompany: source.targetCompany,
+        targetRole: source.targetRole,
+        description: source.description,
+        fromVersionId: id,
+      });
+    } catch {
+      // handleCreate already showed the error toast.
+    }
+  }
+
   async function handleDelete(id: number) {
     const v = versions.find((x) => x.id === id);
     if (!window.confirm(`Delete version “${v?.name ?? id}” and all its history? This cannot be undone.`)) return;
@@ -141,6 +158,7 @@ function Dashboard() {
         loading={loadingList}
         onSelect={handleSelect}
         onCreate={handleCreate}
+        onDuplicate={handleDuplicate}
         onDelete={handleDelete}
       />
 

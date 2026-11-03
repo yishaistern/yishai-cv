@@ -4,6 +4,8 @@
 import type { CvData } from './types.ts';
 
 export const baseCv: CvData = {
+  language: 'en',
+
   header: {
     firstName: 'Yishai',
     lastName: 'Stern',

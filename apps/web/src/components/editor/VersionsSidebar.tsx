@@ -17,10 +17,19 @@ interface VersionsSidebarProps {
   loading: boolean;
   onSelect: (id: number) => void;
   onCreate: (body: CreateVersionBody) => Promise<void>;
+  onDuplicate: (id: number) => void;
   onDelete: (id: number) => void;
 }
 
-export function VersionsSidebar({ versions, selectedId, loading, onSelect, onCreate, onDelete }: VersionsSidebarProps) {
+export function VersionsSidebar({
+  versions,
+  selectedId,
+  loading,
+  onSelect,
+  onCreate,
+  onDuplicate,
+  onDelete,
+}: VersionsSidebarProps) {
   const [creating, setCreating] = useState(false);
 
   return (
@@ -67,7 +76,16 @@ export function VersionsSidebar({ versions, selectedId, loading, onSelect, onCre
               </button>
               <button
                 type="button"
-                className="icon-btn icon-btn--danger version-item__delete"
+                className="icon-btn version-item__action"
+                aria-label={`Duplicate version "${v.name}"`}
+                title="Duplicate version (last saved state)"
+                onClick={() => onDuplicate(v.id)}
+              >
+                ⧉
+              </button>
+              <button
+                type="button"
+                className="icon-btn icon-btn--danger version-item__action version-item__delete"
                 aria-label={`Delete version "${v.name}"`}
                 title="Delete version"
                 onClick={() => onDelete(v.id)}
@@ -117,6 +135,7 @@ function NewVersionForm({ canDuplicate, currentId, onSubmit, onCancel }: NewVers
         targetRole: form.targetRole.trim(),
         description: form.description,
         fromVersionId: form.startFrom === 'current' && currentId !== null ? currentId : undefined,
+        language: form.startFrom === 'base-he' ? 'he' : undefined,
       });
     } catch {
       // The parent already showed the error as a toast; keep the form open so nothing is lost.
@@ -141,7 +160,16 @@ function NewVersionForm({ canDuplicate, currentId, onSubmit, onCancel }: NewVers
             checked={form.startFrom === 'base'}
             onChange={() => set('startFrom')('base')}
           />
-          Base CV
+          Base CV (English)
+        </label>
+        <label>
+          <input
+            type="radio"
+            name="startFrom"
+            checked={form.startFrom === 'base-he'}
+            onChange={() => set('startFrom')('base-he')}
+          />
+          Base CV (Hebrew)
         </label>
         <label className={canDuplicate ? '' : 'is-disabled'}>
           <input

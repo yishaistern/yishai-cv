@@ -32,7 +32,12 @@ export interface Strength { id: Id; label: string; text: string; hidden?: boolea
 
 export interface Language { id: Id; name: string; level: string }
 
+/** The language the CV itself is written in. 'he' renders right-to-left with Hebrew section headings. */
+export type CvLanguage = 'en' | 'he';
+export const CV_LANGUAGES: readonly CvLanguage[] = ['en', 'he'];
+
 export interface CvData {
+  language?: CvLanguage; // missing = 'en' (data saved before this field existed)
   header: { firstName: string; lastName: string; roleLines: string[] }; // roleLines render one per line under the name
   contact: { email: string; phone: string; linkedin: string };          // linkedin = full URL
   summary: string;
@@ -80,6 +85,7 @@ export interface CreateVersionBody {
   targetCompany?: string;
   targetRole?: string;
   fromVersionId?: number; // duplicate this version's data; otherwise start from the seed/base CV
+  language?: CvLanguage;  // when NOT duplicating: which base CV to start from (default 'en')
 }
 
 export interface UpdateVersionBody {

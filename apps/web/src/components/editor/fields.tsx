@@ -31,6 +31,7 @@ export function TextField({ label, value, onChange, placeholder, type = 'text', 
           id={id}
           className="input"
           type={type}
+          dir="auto"
           value={value}
           placeholder={placeholder}
           onChange={(e) => onChange(e.target.value)}
@@ -74,6 +75,7 @@ export function TextAreaField({
       <textarea
         id={id}
         className="input textarea"
+        dir="auto"
         value={value}
         rows={rows}
         placeholder={placeholder}

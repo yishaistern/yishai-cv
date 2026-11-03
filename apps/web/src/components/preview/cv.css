@@ -17,7 +17,7 @@
 
   font-family:'Figtree','Segoe UI',Arial,sans-serif;
   color:var(--navy-text);
-  text-align:left;
+  text-align:start;
   line-height:normal;
   -webkit-print-color-adjust:exact !important;
   print-color-adjust:exact !important;
@@ -210,6 +210,20 @@
   color:#C9D2EA;
 }
 
+/* ===================== HEBREW (RTL) ===================== */
+
+/* Figtree has no Hebrew glyphs; Heebo matches its geometric look. */
+.cv-root[dir="rtl"]{
+  font-family:'Heebo','Figtree','Segoe UI',Arial,sans-serif;
+}
+
+/* Letter-spacing breaks the look of Hebrew text (and uppercase does nothing). */
+.cv-root[dir="rtl"] .side-label,
+.cv-root[dir="rtl"] .section-heading{
+  letter-spacing:0;
+  font-size:13.5px;
+}
+
 /* ===================== MAIN CONTENT ===================== */
 
 .cv-root .content{
@@ -303,7 +317,7 @@
 
 .cv-root .job ul li{
   position:relative;
-  padding-left:18px;
+  padding-inline-start:18px;
   margin-bottom:4px;
   font-size:14.2px;
   line-height:1.4;
@@ -317,7 +331,7 @@
 .cv-root .job ul li::before{
   content:"";
   position:absolute;
-  left:2px;
+  inset-inline-start:2px;
   top:8px;
   width:5px;
   height:5px;
@@ -340,7 +354,7 @@
   margin:14px 0 0;
   padding:12px 14px;
   background:#F4F8FC;
-  border-left:3px solid var(--accent-blue);
+  border-inline-start:3px solid var(--accent-blue);
   border-radius:3px;
   font-size:13.5px;
   line-height:1.55;

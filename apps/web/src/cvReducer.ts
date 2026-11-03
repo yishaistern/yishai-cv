@@ -22,6 +22,7 @@ import type {
   BulletGroup,
   Bullet,
   CvData,
+  CvLanguage,
   Id,
   Job,
   Language,
@@ -48,6 +49,7 @@ export type CvAction =
   | { type: 'education/update'; patch: Partial<Education> }
   | { type: 'military/update'; patch: Partial<Military> }
   | { type: 'summary/set'; value: string }
+  | { type: 'language/set'; language: CvLanguage }
   // skills
   | { type: 'skills/add'; id: Id; label: string }
   | { type: 'skills/update'; id: Id; patch: Partial<Omit<Skill, 'id'>> }
@@ -141,6 +143,8 @@ export function cvReducer(state: CvData, action: CvAction): CvData {
       return { ...state, military: { ...state.military, ...action.patch } };
     case 'summary/set':
       return { ...state, summary: action.value };
+    case 'language/set':
+      return { ...state, language: action.language };
 
     case 'skills/add':
       return { ...state, skills: [...state.skills, { id: action.id, label: action.label }] };

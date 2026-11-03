@@ -2,3 +2,4 @@
 // Used by both apps/web (React) and apps/api (NestJS).
 export * from './types.ts';
 export { baseCv } from './baseCv.ts';
+export { baseCvHe } from './baseCvHe.ts';

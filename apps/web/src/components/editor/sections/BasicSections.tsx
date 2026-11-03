@@ -4,10 +4,39 @@
 // edits plus `dispatch` — a narrow props surface keeps components reusable
 // and makes it obvious what they can change.
 // ============================================================
-import type { CvData } from '@yishai-cv/shared';
+import type { CvData, CvLanguage } from '@yishai-cv/shared';
 import type { CvDispatch } from '../../../cvReducer.ts';
 import { Section } from '../Section.tsx';
 import { BoldHint, TextAreaField, TextField } from '../fields.tsx';
+
+export function LanguageSection({ language, dispatch }: { language: CvLanguage; dispatch: CvDispatch }) {
+  return (
+    <Section title={`CV language — ${language === 'he' ? 'עברית (RTL)' : 'English'}`}>
+      <fieldset className="radio-group">
+        <legend className="field__label">Layout & section headings</legend>
+        <label>
+          <input
+            type="radio"
+            name="cvLanguage"
+            checked={language === 'en'}
+            onChange={() => dispatch({ type: 'language/set', language: 'en' })}
+          />
+          English (left-to-right)
+        </label>
+        <label>
+          <input
+            type="radio"
+            name="cvLanguage"
+            checked={language === 'he'}
+            onChange={() => dispatch({ type: 'language/set', language: 'he' })}
+          />
+          עברית (right-to-left)
+        </label>
+      </fieldset>
+      <p className="hint">This only changes the layout and fixed headings. The content you type stays as written.</p>
+    </Section>
+  );
+}
 
 export function HeaderSection({ header, dispatch }: { header: CvData['header']; dispatch: CvDispatch }) {
   return (
