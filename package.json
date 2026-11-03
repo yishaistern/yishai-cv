@@ -1,0 +1,27 @@
+{
+  "name": "yishai-cv",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "apps/*",
+    "libs/*"
+  ],
+  "scripts": {
+    "dev": "nx run-many -t dev -p api web",
+    "build": "nx run-many -t build",
+    "typecheck": "nx run-many -t typecheck",
+    "seed": "nx run api:seed",
+    "graph": "nx graph"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.6",
+    "concurrently": "^10.0.6",
+    "nx": "^24.0.3",
+    "typescript": "^7.0.2"
+  },
+  "engines": {
+    "node": ">=26.13.0",
+    "npm": ">=12"
+  },
+  "packageManager": "npm@12.2.1"
+}
