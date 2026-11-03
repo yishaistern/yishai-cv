@@ -12,9 +12,6 @@ dist/
 /apps/api/data/
 # Your own notes, static CVs and anything else private
 /private/
-# Company logos: only the demo ones (sample-*) are committed
-/images/*
-!/images/sample-*
 
 # Environment
 .env

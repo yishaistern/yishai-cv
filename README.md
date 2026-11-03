@@ -47,10 +47,11 @@ apps/api/data/base-cv.he.json   # Hebrew base CV (optional)
 
 When a file exists, the API uses it to seed the "Base CV" versions and as the starting point for new versions. Otherwise it falls back to the demo CV. The files are read on every use, so no restart is needed. Run `npm run seed` to rebuild the database from them. Tests use an in-memory database and always get the demo CV.
 
-Other private files are gitignored too:
+Anything else private (notes, old static CVs) can go in `private/`, which is gitignored too.
 
-- `images/*`: company logos. Only the demo logos (`images/sample-*`) are committed, so yours stay local.
-- `private/`: anything else you want to keep next to the project (notes, old static CVs).
+### Company logos (shared)
+
+`images/` is a shared, committed folder of company logos that anyone can add to. Drop a file in (PNG, JPEG or SVG, roughly square, small) and reference it from a job as `images/<file>` in the editor's **Logo** field. The API serves the folder at `/images/*`. Use lowercase file names without spaces, for example `images/acme.png`.
 
 ### Workspace layout
 
@@ -61,7 +62,7 @@ apps/
 libs/
   shared/   @yishai-cv/shared: CvData types, REST contract, base CV
 nx.json     task pipeline (build dependsOn ^build) + caching
-images/   company logos, served by the API at /images (only images/sample-* is committed)
+images/   shared company logos (anyone can add), served by the API at /images
 private/  gitignored: your own notes and files
 ```
 
