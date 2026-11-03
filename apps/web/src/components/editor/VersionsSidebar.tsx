@@ -6,7 +6,7 @@
 // "presentational" component: data in via props (@Input), events out via
 // callbacks (@Output). Only the "is the New-version form open?" flag is local.
 // ============================================================
-import { useState, type FormEvent } from 'react';
+import { useState, type SubmitEvent } from 'react';
 import type { CreateVersionBody, VersionSummary } from '@yishai-cv/shared';
 import { TextAreaField, TextField } from './fields.tsx';
 import { formatDateTime } from './format.ts';
@@ -124,7 +124,7 @@ function NewVersionForm({ canDuplicate, currentId, onSubmit, onCancel }: NewVers
   // `keyof typeof form` makes `field` type-checked against the state's keys.
   const set = (field: keyof typeof form) => (value: string) => setForm((f) => ({ ...f, [field]: value }));
 
-  async function handleSubmit(e: FormEvent) {
+  async function handleSubmit(e: SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
     if (!form.name.trim()) return;
     setSubmitting(true);
