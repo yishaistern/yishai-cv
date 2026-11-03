@@ -3,7 +3,7 @@
 // All three reuse <SortableList> — notice how `renderItem` gets a correctly
 // typed `skill` / `strength` / `language` thanks to the generic T.
 // ============================================================
-import { useState, type FormEvent } from 'react';
+import { useState, type SubmitEvent } from 'react';
 import type { Language, Skill, Strength } from '@yishai-cv/shared';
 import type { CvDispatch } from '../../../cvReducer.ts';
 import { Section } from '../Section.tsx';
@@ -17,7 +17,7 @@ export function SkillsSection({ skills, dispatch }: { skills: Skill[]; dispatch:
   const [newLabel, setNewLabel] = useState('');
   const visible = skills.filter((s) => !s.hidden).length;
 
-  function addSkill(e: FormEvent) {
+  function addSkill(e: SubmitEvent<HTMLFormElement>) {
     e.preventDefault(); // stop the browser's full-page form submit
     const label = newLabel.trim();
     if (!label) return;
