@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+# A newer push to the same branch cancels the older run.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      # Node ships an older npm than the one package.json requires (engine-strict),
+      # so install the exact version pinned in "packageManager".
+      - run: npm install -g "$(node -p "require('./package.json').packageManager")"
+
+      - run: npm ci
+
+      # oxlint, then typecheck + test + build for every Nx project.
+      - run: npm run check

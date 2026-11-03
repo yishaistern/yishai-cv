@@ -39,10 +39,13 @@ interface SortableListProps<T extends { id: string }> {
 }
 
 // Nested lists (bullets inside groups inside jobs) all receive bubbling drag
-// events. We remember which list started the drag so each list only reacts to
-// its own items and lets foreign drags bubble up to the parent list.
-// A module-level variable is fine here: only one drag can happen at a time.
-let activeDrag: { listId: string; index: number } | null = null;
+// events, so each list must only react to drags of its OWN items and let the
+// others bubble up to the parent list. The drag event itself carries that
+// information: we store the index under a MIME type unique to this list.
+// During dragover the browser only exposes the *types* (not the data), which is
+// enough to recognise our own drag; on drop we can read the index back.
+// No shared mutable state is needed, which keeps the component pure.
+const dragType = (listId: string) => `application/x-sortable-${listId}`.toLowerCase();
 
 export function SortableList<T extends { id: string }>({
   items,
@@ -58,21 +61,21 @@ export function SortableList<T extends { id: string }>({
   const [dragIndex, setDragIndex] = useState<number | null>(null);
   const [overIndex, setOverIndex] = useState<number | null>(null);
 
-  const isOwnDrag = () => activeDrag?.listId === listId;
+  const isOwnDrag = (e: DragEvent) => e.dataTransfer.types.includes(dragType(listId));
 
   function handleDragStart(e: DragEvent<HTMLElement>, index: number) {
     e.stopPropagation(); // don't let a parent list think *it* started a drag
-    activeDrag = { listId, index };
     setDragIndex(index);
     e.dataTransfer.effectAllowed = 'move';
-    e.dataTransfer.setData('text/plain', String(index)); // Firefox needs some data to start a drag
+    e.dataTransfer.setData(dragType(listId), String(index));
+    e.dataTransfer.setData('text/plain', String(index)); // Firefox needs text data to start a drag
     // Use the whole row as the drag "ghost" image rather than just the handle.
-    const row = (e.currentTarget as HTMLElement).closest('.sortable__row');
+    const row = e.currentTarget.closest('.sortable__row');
     if (row) e.dataTransfer.setDragImage(row, 16, 16);
   }
 
   function handleDragOver(e: DragEvent<HTMLElement>, index: number) {
-    if (!isOwnDrag()) return; // a drag from another list — let it bubble
+    if (!isOwnDrag(e)) return; // a drag from another list: let it bubble
     e.preventDefault(); // preventDefault on dragover = "dropping here is allowed"
     e.stopPropagation();
     e.dataTransfer.dropEffect = 'move';
@@ -80,16 +83,15 @@ export function SortableList<T extends { id: string }>({
   }
 
   function handleDrop(e: DragEvent<HTMLElement>, index: number) {
-    if (!isOwnDrag() || activeDrag === null) return;
+    if (!isOwnDrag(e)) return;
     e.preventDefault();
     e.stopPropagation();
-    const from = activeDrag.index;
-    if (from !== index) onMove(from, index);
+    const from = Number(e.dataTransfer.getData(dragType(listId)));
+    if (Number.isInteger(from) && from !== index) onMove(from, index);
     resetDrag();
   }
 
   function resetDrag() {
-    activeDrag = null;
     setDragIndex(null);
     setOverIndex(null);
   }
@@ -113,6 +115,8 @@ export function SortableList<T extends { id: string }>({
           .join(' ');
 
         return (
+          // Drop target for mouse drag & drop; keyboard users get the ↑/↓ buttons instead.
+          // oxlint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
           <li
             key={item.id}
             className={classes}

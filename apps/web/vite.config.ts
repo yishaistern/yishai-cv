@@ -1,3 +1,4 @@
+/// <reference types="vitest/config" />
 import { defaultClientConditions, defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
@@ -12,8 +13,14 @@ export default defineConfig({
   server: {
     port: 5173,
     proxy: {
-      '/api': 'http://localhost:3001',
-      '/images': 'http://localhost:3001',
+      '/api': 'http://127.0.0.1:3001',
+      '/images': 'http://127.0.0.1:3001',
     },
+  },
+  test: {
+    environment: 'jsdom',
+    setupFiles: ['./src/test/setup.ts'],
+    // Vitest's own resolver also needs the source condition for @yishai-cv/shared.
+    server: { deps: { inline: ['@yishai-cv/shared'] } },
   },
 });

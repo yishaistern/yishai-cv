@@ -1,0 +1,18 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  // oxlint instead of ESLint: typescript-eslint doesn't support TypeScript 7 yet,
+  // and oxlint ships the React Compiler rules (purity, refs, globals, set-state-in-effect…) natively.
+  "plugins": ["typescript", "unicorn", "oxc", "import", "react", "jsx-a11y", "vitest", "node"],
+  "categories": { "correctness": "error", "suspicious": "warn" },
+  "env": { "browser": true, "node": true, "es2024": true },
+  "ignorePatterns": ["**/dist/**", ".nx/**"],
+  "rules": {
+    "react/react-in-jsx-scope": "off",
+    // Nest modules are empty classes by design: all the information is in the decorator.
+    "typescript/no-extraneous-class": ["warn", { "allowWithDecorator": true }],
+    // Side-effect imports we rely on: CSS files, Nest's reflect-metadata polyfill, jest-dom matchers.
+    "import/no-unassigned-import": ["warn", { "allow": ["**/*.css", "reflect-metadata", "@testing-library/jest-dom/vitest"] }],
+    // <div role="status"> is the standard live region for toasts; <output> is meant for calculation results.
+    "jsx-a11y/prefer-tag-over-role": "off"
+  }
+}

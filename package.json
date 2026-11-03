@@ -9,7 +9,11 @@
   "scripts": {
     "dev": "nx run-many -t dev -p api web",
     "build": "nx run-many -t build",
+    "start": "npm run build && npm start -w api",
+    "lint": "oxlint --deny-warnings",
     "typecheck": "nx run-many -t typecheck",
+    "test": "nx run-many -t test",
+    "check": "npm run lint && nx run-many -t typecheck test build",
     "seed": "nx run api:seed",
     "graph": "nx graph"
   },
@@ -17,6 +21,7 @@
     "@types/node": "^26.6.6",
     "concurrently": "^10.0.6",
     "nx": "^24.0.3",
+    "oxlint": "^1.90.0",
     "typescript": "^7.0.2"
   },
   "engines": {

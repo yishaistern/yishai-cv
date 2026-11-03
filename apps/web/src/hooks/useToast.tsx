@@ -7,7 +7,7 @@
 //   ("prop drilling"). Angular equivalent: a service provided in a parent
 //   component's `providers: []` and injected by children.
 // ============================================================
-import { createContext, useCallback, useContext, useMemo, useRef, useState, type ReactNode } from 'react';
+import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 
 type ToastKind = 'error' | 'success' | 'info';
 interface Toast { id: number; kind: ToastKind; message: string }
@@ -27,10 +27,22 @@ export function ToastProvider({ children }: { children: ReactNode }) {
   const [toasts, setToasts] = useState<Toast[]>([]);
   // useRef holds a mutable value that survives re-renders but doesn't trigger one when changed.
   const nextId = useRef(1);
+  // Pending auto-dismiss timers, so they can be cleared if the provider unmounts.
+  const timers = useRef(new Map<number, number>());
 
   const dismiss = useCallback((id: number) => {
+    window.clearTimeout(timers.current.get(id));
+    timers.current.delete(id);
     // Functional update form: (prev) => next. Safe even if several updates are queued.
     setToasts((prev) => prev.filter((t) => t.id !== id));
+  }, []);
+
+  useEffect(() => {
+    const pending = timers.current;
+    return () => {
+      for (const handle of pending.values()) window.clearTimeout(handle);
+      pending.clear();
+    };
   }, []);
 
   const show = useCallback(
@@ -38,7 +50,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
       const id = nextId.current++;
       setToasts((prev) => [...prev, { id, kind, message }]);
       // Errors stay longer so you can actually read them.
-      window.setTimeout(() => dismiss(id), kind === 'error' ? 8000 : 3000);
+      timers.current.set(id, window.setTimeout(() => dismiss(id), kind === 'error' ? 8000 : 3000));
     },
     [dismiss],
   );
@@ -50,8 +62,9 @@ export function ToastProvider({ children }: { children: ReactNode }) {
     [show],
   );
 
+  // React 19: render the context itself as the provider (<Ctx.Provider> is the legacy form).
   return (
-    <ToastContext.Provider value={value}>
+    <ToastContext value={value}>
       {children}
       <div className="toasts" role="status" aria-live="polite">
         {toasts.map((t) => (
@@ -63,7 +76,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
           </div>
         ))}
       </div>
-    </ToastContext.Provider>
+    </ToastContext>
   );
 }
 

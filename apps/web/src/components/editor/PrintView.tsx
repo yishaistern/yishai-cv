@@ -5,7 +5,7 @@
 // Looks like the old v3.html: the CV at full size on a grey page with a
 // floating "Download PDF" button. The print dialog also opens automatically
 // once the data, web fonts and logo images have loaded (otherwise the PDF
-// could miss them). The browser uses document.title as the PDF file name.
+// could miss them). The browser uses the page <title> as the PDF file name.
 // ============================================================
 import { useEffect, useRef, useState } from 'react';
 import type { CvData } from '@yishai-cv/shared';
@@ -18,7 +18,8 @@ interface PrintViewProps {
 }
 
 export function PrintView({ versionId, revisionId }: PrintViewProps) {
-  const [data, setData] = useState<CvData | null>(null);
+  // The CV to print plus the page title (the browser uses it as the PDF file name).
+  const [doc, setDoc] = useState<{ data: CvData; title: string } | null>(null);
   const [error, setError] = useState<string | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const printed = useRef(false); // StrictMode runs effects twice in dev — auto-print only once
@@ -34,14 +35,19 @@ export function PrintView({ versionId, revisionId }: PrintViewProps) {
   useEffect(() => {
     let cancelled = false;
     async function load() {
-      const version = await api.getVersion(versionId);
-      const revision = revisionId !== undefined ? await api.getRevision(revisionId) : null;
+      // Independent requests: fetch them in parallel.
+      const [version, revision] = await Promise.all([
+        api.getVersion(versionId),
+        revisionId !== undefined ? api.getRevision(revisionId) : null,
+      ]);
       if (cancelled) return;
+      if (revision && revision.versionId !== version.id) {
+        throw new Error(`revision #${revision.id} belongs to version #${revision.versionId}`);
+      }
       const cv = revision ? revision.data : version.data;
-      setData(cv);
       const name = `${cv.header.firstName} ${cv.header.lastName}`.trim() || 'CV';
       const target = version.targetCompany || version.name;
-      document.title = `${name} - CV - ${target}${revision ? ` (rev ${revision.id})` : ''}`;
+      setDoc({ data: cv, title: `${name} - CV - ${target}${revision ? ` (rev ${revision.id})` : ''}` });
     }
     load().catch((err) => !cancelled && setError(errorMessage(err)));
     return () => {
@@ -51,7 +57,7 @@ export function PrintView({ versionId, revisionId }: PrintViewProps) {
 
   // 2) once rendered, wait for fonts + every <img>, then print
   useEffect(() => {
-    if (!data || !containerRef.current) return;
+    if (!doc || !containerRef.current) return;
     let cancelled = false;
     const images = Array.from(containerRef.current.querySelectorAll('img'));
     const imagesLoaded = images.map((img) =>
@@ -70,7 +76,7 @@ export function PrintView({ versionId, revisionId }: PrintViewProps) {
     return () => {
       cancelled = true;
     };
-  }, [data]);
+  }, [doc]);
 
   if (error) {
     return (
@@ -80,11 +86,13 @@ export function PrintView({ versionId, revisionId }: PrintViewProps) {
       </p>
     );
   }
-  if (!data) return <p className="print-message">Loading…</p>;
+  if (!doc) return <p className="print-message">Loading…</p>;
 
   return (
     <div className="print-root" ref={containerRef}>
-      <CvPreview data={data} />
+      {/* React 19 hoists <title> into <head> during the commit, before the print effect runs. */}
+      <title>{doc.title}</title>
+      <CvPreview data={doc.data} />
       <button type="button" className="download-pdf" onClick={() => window.print()}>
         Download PDF
       </button>

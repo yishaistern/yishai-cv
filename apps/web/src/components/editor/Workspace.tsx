@@ -141,6 +141,8 @@ export function Workspace({ version, onSaved, onReplaced, onDirtyChange }: Works
 
   return (
     <>
+      {/* React 19 hoists <title> into <head>, so the tab shows the version and its save state. */}
+      <title>{`${isDirty ? '● ' : ''}${meta.name || 'Untitled version'} · CV Studio`}</title>
       <div className="editor-col">
         <div className="toolbar">
           <div className="toolbar__title">
