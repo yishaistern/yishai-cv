@@ -101,13 +101,13 @@ function JobEditor({ job, dispatch }: { job: Job; dispatch: CvDispatch }) {
           <TextField
             label="Company"
             value={job.company}
-            placeholder="ZoomInfo — Productivity Engineering"
+            placeholder="Northwind Labs — Developer Platform"
             onChange={(company) => update({ company })}
           />
           <TextField
             label="Logo path"
             value={job.logo ?? ''}
-            placeholder="images/zoominfo.png"
+            placeholder="images/sample-northwind.svg"
             // Empty string → remove the property (undefined) so the CV shows no logo.
             onChange={(logo) => update({ logo: logo || undefined })}
             addon={job.logo ? <img className="logo-preview" src={`/${job.logo.replace(/^\//, '')}`} alt="" /> : null}

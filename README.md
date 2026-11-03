@@ -1,6 +1,8 @@
 # CV Dashboard
 
-A local editor for tailoring the CV to each job application. Each **version** is a named copy of the CV (for example "Buildots – Full-Stack Team Lead"). For each one you can change the headline and summary, reorder skills, reword or reorder bullets, and hide the bullets that don't matter for that job. Every save keeps a **revision**, so you can go back. The preview updates as you type, and **Print / PDF** gives you an A4 PDF that looks like `v3.html`.
+A local editor for tailoring the CV to each job application. Each **version** is a named copy of the CV (for example "Buildots – Full-Stack Team Lead"). For each one you can change the headline and summary, reorder skills, reword or reorder bullets, and hide the bullets that don't matter for that job. Every save keeps a **revision**, so you can go back. The preview updates as you type, and **Print / PDF** gives you a two-page A4 PDF.
+
+The repo ships with a **demo CV** for a fictional person (Alex Morgan). To use your own, see [Your own CV](#your-own-cv-kept-out-of-git).
 
 ## Run it
 
@@ -23,7 +25,7 @@ Then open http://localhost:5173.
 | `npm run format`                         | [oxfmt](https://oxc.rs/docs/guide/usage/formatter) formats the whole repo in place (`npm run format:check` only checks) |
 | `npm run typecheck`                      | `tsc --noEmit` in every project                                                                                         |
 | `npm run check`                          | lint + format check + typecheck + test + build (CI runs this, plus `npm run e2e` in a parallel job)                     |
-| `npm run seed`                           | **Resets** the database to the base CV (from `v3.html`)                                                                 |
+| `npm run seed`                           | **Resets** the database to the base CVs (yours if present, otherwise the demo)                                          |
 | `npm run build`                          | Production builds: `libs/shared/dist`, `apps/api/dist`, `apps/web/dist`                                                 |
 | `npm run graph`                          | Opens the Nx project graph                                                                                              |
 | `npx nx dev api` / `npx nx test web` / … | Run one target of one project                                                                                           |
@@ -34,6 +36,22 @@ Nx caches `build`, `typecheck` and `test`, and runs `^build` first, so `libs/sha
 
 **Database:** SQLite at `apps/api/data/cv.db` (override with `CV_DB_PATH`). It's created and seeded the first time the API starts. `data/` is in `.gitignore`, and `npm run seed` resets it.
 
+### Your own CV (kept out of git)
+
+The base CV in `libs/shared/src/baseCv.ts` (and `baseCvHe.ts`) is a demo, so the repo can be public. To use your real CV without committing it, put it next to the database:
+
+```
+apps/api/data/base-cv.en.json   # English base CV (a CvData object, see libs/shared/src/types.ts)
+apps/api/data/base-cv.he.json   # Hebrew base CV (optional)
+```
+
+When a file exists, the API uses it to seed the "Base CV" versions and as the starting point for new versions. Otherwise it falls back to the demo CV. The files are read on every use, so no restart is needed. Run `npm run seed` to rebuild the database from them. Tests use an in-memory database and always get the demo CV.
+
+Other private files are gitignored too:
+
+- `images/*`: company logos. Only the demo logos (`images/sample-*`) are committed, so yours stay local.
+- `private/`: anything else you want to keep next to the project (notes, old static CVs).
+
 ### Workspace layout
 
 ```
@@ -43,7 +61,8 @@ apps/
 libs/
   shared/   @yishai-cv/shared: CvData types, REST contract, base CV
 nx.json     task pipeline (build dependsOn ^build) + caching
-index.html, v2.html, v3.html, images/   the static CV (logos are served by the API at /images)
+images/   company logos, served by the API at /images (only images/sample-* is committed)
+private/  gitignored: your own notes and files
 ```
 
 `@yishai-cv/shared` is a workspace package. Vite and the web typecheck read its `.ts` sources directly (the `@yishai-cv/source` export condition), so edits hot-reload. The API imports its compiled `dist/`.
@@ -55,9 +74,10 @@ apps/api/src/
   main.ts                        createApp(): /api prefix, 2mb JSON, validation, error filter, /images + built web app;
                                  bootstrap() listens on HOST (default 127.0.0.1):PORT
   app.module.ts                  DatabaseModule + VersionsModule
-  paths.ts                       DB_PATH, IMAGES_DIR
+  paths.ts                       DB_PATH, BASE_CV_DIR, IMAGES_DIR
   seed.ts                        `npm run seed` (standalone Nest application context)
   database/cv.repository.ts      node:sqlite storage: versions 1 ── * revisions (injectable)
+  database/base-cv.ts            loadBaseCv(): your base-cv.<lang>.json if present, else the demo CV
   versions/versions.controller.ts  /api/versions/* and /api/revisions/:id
   versions/versions.service.ts     rules + 404s
   versions/versions.dto.ts         class-validator DTOs implementing the shared contract types

@@ -1,6 +1,7 @@
-// The master CV translated to Hebrew. Same structure and ids as baseCv.ts, so
-// the two stay easy to compare side by side. Seeded as the "Base CV (Hebrew)" version.
-// Tech names, company names and product names stay in English, as is usual in Israeli CVs.
+// The demo base CV translated to Hebrew. Same structure and ids as baseCv.ts, so
+// the two stay easy to compare side by side. Seeded as the "Base CV (Hebrew)" version,
+// unless apps/api/data/base-cv.he.json exists (gitignored, holds your real CV).
+// Tech names and company names stay in English, as is usual in Israeli CVs.
 // Markup: **bold** renders as <strong>.
 import type { CvData } from './types.ts';
 import { baseCv } from './baseCv.ts';
@@ -9,194 +10,149 @@ export const baseCvHe: CvData = {
   language: 'he',
 
   header: {
-    firstName: 'ישי',
-    lastName: 'שטרן',
-    roleLines: ['ראש צוות פיתוח', 'הנדסת AI ו-Full-Stack'],
+    firstName: 'אלכס',
+    lastName: 'מורגן',
+    roleLines: ['ראש צוות פיתוח', 'פיתוח Full-Stack ופלטפורמה'],
   },
 
   contact: { ...baseCv.contact },
 
   summary:
-    'ראש צוות פיתוח Hands-on עם ניסיון של 10+ שנים בהנדסת תוכנה, בפיתוח Full-Stack, במערכות Backend ובהובלה טכנולוגית. בשנים האחרונות מתמקד בבניית כלי פיתוח מבוססי AI, תהליכי עבודה מבוססי LLM, אינטגרציות MCP ואוטומציה הנדסית. בעל ניסיון בהובלת מהנדסים תוך מעורבות עמוקה בארכיטקטורה, במימוש ובאספקה לאורך כל השכבות: Frontend, Backend, APIs, מיקרו-שירותים ותשתיות.',
+    'ראש צוות פיתוח Hands-on עם ניסיון של 10+ שנים בבניית מוצרי Web, שירותי Backend ופלטפורמות פיתוח. מוביל צוותים קטנים תוך קרבה לקוד: ארכיטקטורה, מימוש, Code Review ואספקה לאורך Frontend, APIs, נתונים ותשתיות. בשנים האחרונות מתמקד ב**פרודוקטיביות פיתוח** ובתהליכי עבודה הנדסיים בסיוע AI.',
 
   // Technology names are the same in both languages.
   skills: baseCv.skills.map((s) => ({ ...s })),
 
   education: {
-    school: 'אוניברסיטת בן-גוריון',
-    degree: 'B.Sc. בהנדסת מערכות מידע ותוכנה',
-    place: 'באר שבע',
+    school: 'State University',
+    degree: 'B.Sc. במדעי המחשב',
+    place: 'Springfield',
   },
 
   languages: [
-    { id: 'lang-hebrew', name: 'עברית', level: 'שפת אם' },
     { id: 'lang-english', name: 'אנגלית', level: 'שפת אם' },
+    { id: 'lang-spanish', name: 'ספרדית', level: 'רמה מקצועית' },
   ],
 
   military: {
-    title: 'לוחם ומפקד',
-    detail: 'חטיבת הנח"ל · 2008–2010',
+    title: 'מנטור מתנדב',
+    detail: 'מועדון תכנות לנוער · 2012–2015',
   },
 
   jobs: [
     {
-      id: 'job-zi-2024',
-      title: 'ראש צוות, הנדסת תוכנה',
-      company: 'ZoomInfo — Productivity Engineering',
-      logo: 'images/zoominfo.png',
-      dates: '2024 – היום',
+      id: 'job-northwind-lead',
+      title: 'ראש צוות פיתוח',
+      company: 'Northwind Labs — Developer Platform',
+      logo: 'images/sample-northwind.svg',
+      dates: '2022 – היום',
       groups: [
         {
-          id: 'g-zi24-main',
+          id: 'g-nw-lead-main',
           bullets: [
             {
-              id: 'b-zi24-1',
-              text: 'מוביל צוות Productivity Engineering של **4 מהנדסים**, תוך עבודה Hands-on על בניית כלי פיתוח ופלטפורמות פרודוקטיביות מבוססי AI.',
+              id: 'b-nw-lead-1',
+              text: 'מוביל צוות פלטפורמה של **5 מהנדסים** הבונה כלים פנימיים המשמשים 200+ מפתחים, תוך מעורבות Hands-on בתכנון ובמימוש.',
             },
             {
-              id: 'b-zi24-2',
-              text: 'עובד באופן יומיומי עם **AI coding agents** כחלק מפיתוח התוכנה ומתהליכי העבודה ההנדסיים.',
+              id: 'b-nw-lead-2',
+              text: 'קיצור זמן ה-CI הממוצע מ-25 ל-**8 דקות** באמצעות build caching, פיצול בדיקות וזיהוי בדיקות לא יציבות.',
             },
             {
-              id: 'b-zi24-3',
-              text: 'בונה תהליכי עבודה הנדסיים בסיוע AI באמצעות **LLMs ואינטגרציות MCP**, המופעלים ביוזמת מהנדסים או אוטומטית על ידי מדדים הנדסיים.',
+              id: 'b-nw-lead-3',
+              text: 'אחריות על גיוס, קליטה ושיחות 1:1 שבועיות; שני מהנדסים בצוות קודמו לתפקיד בכיר.',
             },
           ],
         },
         {
-          id: 'g-zi24-initiatives',
-          heading: 'יוזמות מרכזיות ב-AI ובפרודוקטיביות פיתוח',
+          id: 'g-nw-lead-initiatives',
+          heading: 'יוזמות מרכזיות בפרודוקטיביות פיתוח',
           bullets: [
             {
-              id: 'b-zi24-4',
-              text: '**תהליכי AI הנדסיים:** פיתוח ושיפור מתמשך של תהליכי עבודה מבוססי AI ומערכת multi-agent, על בסיס צרכים ושימוש הנדסיים אמיתיים.',
+              id: 'b-nw-lead-4',
+              text: '**עוזר Code Review מבוסס AI:** בניית מערכת מבוססת LLM המגיבה על Pull Requests עם בדיקות ייעודיות לפרויקט.',
             },
             {
-              id: 'b-zi24-5',
-              text: '**MCP ל-Design System הפנימי:** בניית אינטגרציית MCP המחוברת ל-UI monorepo, המאפשרת למהנדסים בצוותי ה-UI לתשאל, לעבוד עם ולעדכן רכיבי Design System באמצעות פיתוח בסיוע AI.',
+              id: 'b-nw-lead-5',
+              text: '**תבניות שירות:** פיתוח CLI שמקים שירות חדש עם CI, ניטור ותיעוד בתוך דקות.',
             },
             {
-              id: 'b-zi24-6',
-              text: '**Figma-to-Code:** בניית מערכת המייצרת רכיבי Frontend מוכנים ל-production ישירות מקובצי עיצוב, ומקצרת את הדרך מעיצוב למימוש.',
+              id: 'b-nw-lead-6',
+              text: '**האקתון פנימי:** ארגון האקתון רבעוני בנושא חוויית מפתחים.',
               hidden: true,
             },
             {
-              id: 'b-zi24-7',
-              text: '**MCP ל-Datadog:** בניית אינטגרציה המאפשרת ניתוח לוגים ותהליכי observability בסיוע AI.',
+              id: 'b-nw-lead-7',
+              text: '**דשבורדים ל-observability:** אחידות בלוגים, מדדים והתראות לאורך 30+ שירותים.',
             },
           ],
         },
       ],
       highlight: {
-        label: 'הובלת AI הלכה למעשה',
-        text: 'עבודה צמודה עם צוותי הפיתוח על פיתוח, בדיקה, אימוץ ושיפור מתמשך של כלים ותהליכי עבודה מבוססי AI, תוך מעורבות ישירה במימוש ובהחלטות הטכניות.',
+        label: 'הובלה הלכה למעשה',
+        text: 'שילוב בין הובלת הצוות לבין אחריות ישירה על הבעיות הטכניות הקשות ביותר, ומדידת כל יוזמה לפי השפעתה על זמן המפתחים.',
       },
     },
     {
-      id: 'job-zi-2020-2024',
-      title: 'ראש צוות — פיתוח Full-Stack',
-      company: 'ZoomInfo',
-      logo: 'images/zoominfo.png',
-      dates: '2020 – 2024',
+      id: 'job-northwind-senior',
+      title: 'מפתח Full-Stack בכיר',
+      company: 'Northwind Labs',
+      logo: 'images/sample-northwind.svg',
+      dates: '2019 – 2022',
       groups: [
         {
-          id: 'g-zi20-24-main',
+          id: 'g-nw-senior-main',
           bullets: [
             {
-              id: 'b-zi20-24-1',
-              text: 'הובלת פיתוח פיצ׳רים Full-Stack מקצה לקצה לאורך **Frontend, מיקרו-שירותי Backend, APIs ובסיסי נתונים**, עבור לקוחות Enterprise בקנה מידה גדול.',
+              id: 'b-nw-senior-1',
+              text: 'פיתוח פיצ׳רים ללקוחות מקצה לקצה לאורך **React, שירותי Node.js ו-PostgreSQL**.',
             },
             {
-              id: 'b-zi20-24-2',
-              text: 'פיתוח ותחזוקה של מיקרו-שירותי Backend ו-APIs, כולל פריסה והפעלה על **Kubernetes**.',
+              id: 'b-nw-senior-2',
+              text: 'פירוק מונוליט לארבעה שירותים הפועלים על **Kubernetes**, עם מיגרציות ללא השבתה.',
             },
             {
-              id: 'b-zi20-24-3',
-              text: 'הסבת תהליכי CI/CD ל-**GitHub Actions** בהתאם לצורכי הפיתוח והאספקה.',
-            },
-            {
-              id: 'b-zi20-24-4',
-              text: 'הובלת החלטות ארכיטקטורה ועבודה בממשק עם Product, Design ו-QA.',
-            },
-            {
-              id: 'b-zi20-24-5',
-              text: 'ביסוס תרבות הנדסית חזקה סביב איכות ואמינות, כולל אימוץ מוקדם של בדיקות יחידה (unit tests).',
+              id: 'b-nw-senior-3',
+              text: 'הטמעת contract tests בין ה-Frontend ל-Backend, שתפסו את רוב רגרסיות ה-API לפני שחרור.',
             },
           ],
         },
       ],
     },
     {
-      id: 'job-zi-2020',
+      id: 'job-bluefin',
       title: 'מפתח Full-Stack',
-      company: 'ZoomInfo',
-      logo: 'images/zoominfo.png',
-      dates: '2020',
+      company: 'Bluefin Systems',
+      logo: 'images/sample-bluefin.svg',
+      dates: '2016 – 2019',
       pageBreakBefore: true,
       groups: [
         {
-          id: 'g-zi20-main',
+          id: 'g-bf-main',
           bullets: [
-            {
-              id: 'b-zi20-1',
-              text: 'פיתוח ותחזוקה של מוצרי Full-Stack הכוללים לוגיקה עסקית מורכבת, APIs, אפליקציות Frontend ועיבוד נתונים בהיקף גדול.',
-            },
-            {
-              id: 'b-zi20-2',
-              text: 'עבודה עם **Angular, TypeScript, Node.js ו-SQL**.',
-            },
-            {
-              id: 'b-zi20-3',
-              text: 'המהנדס הראשון ב-ZoomInfo שהטמיע בדיקות יחידה, וסייע לבסס את התשתית לאימוץ רחב של בדיקות אוטומטיות.',
-            },
+            { id: 'b-bf-1', text: 'פיתוח דשבורד לוגיסטי המשמש צוותי מחסן למעקב אחר משלוחים בזמן אמת.' },
+            { id: 'b-bf-2', text: 'תכנון REST APIs ו-background jobs המעבדים **מיליוני אירועים ביום**.' },
+            { id: 'b-bf-3', text: 'שיפור זמני טעינת הדפים ב-40% באמצעות code splitting ו-caching.' },
           ],
         },
       ],
     },
     {
-      id: 'job-broadridge',
+      id: 'job-pixelcraft',
       title: 'מפתח Front-End',
-      company: 'Broadridge Financial Solutions',
-      logo: 'images/brodrigge.jpeg',
-      dates: '2018 – 2020',
+      company: 'Pixelcraft Studio',
+      logo: 'images/sample-pixelcraft.svg',
+      dates: '2013 – 2016',
       groups: [
         {
-          id: 'g-br-main',
-          bullets: [
-            { id: 'b-br-1', text: 'פיתוח אפליקציות פיננסיות מבוססות Angular עבור לקוחות גדולים בארה״ב.' },
-            { id: 'b-br-2', text: 'מימוש ניהול state באמצעות **NGRX Store** ותרומה לבדיקות יחידה.' },
-            { id: 'b-br-3', text: 'השתתפות בהחלטות ארכיטקטורה ובשיפור ביצועי המערכת.' },
-            { id: 'b-br-4', text: 'עבודה צמודה עם צוות QA מבוזר ב**הודו**.' },
-          ],
-        },
-      ],
-    },
-    {
-      id: 'job-cambium',
-      title: 'מפתח Front-End',
-      company: 'Cambium (נרכשה ע״י Matrix)',
-      logo: 'images/cambium.jpeg',
-      dates: '2013 – 2018',
-      groups: [
-        {
-          id: 'g-cam-main',
+          id: 'g-px-main',
           bullets: [
             {
-              id: 'b-cam-1',
-              text: 'פיתוח מגוון אפליקציות מובייל ו-Web, בהן **הכוכב הבא**, **אור ירוק** ו-**למטייל צ׳קליסט**.',
+              id: 'b-px-1',
+              text: 'בניית אתרים ואפליקציות Web רספונסיביים עבור לקוחות בתחומי הקמעונאות, המדיה והחינוך.',
             },
-            {
-              id: 'b-cam-2',
-              text: 'בניית מערכות CMS עבור **ספורט 5** ו**ערוץ 13**, כולל מערכות לניהול משתמשים ותוכן.',
-            },
-            {
-              id: 'b-cam-3',
-              text: 'פיתוח אפליקציות Web רספונסיביות עבור סטארט-אפים בתחום הנדל״ן ועבור **ערוץ 13**.',
-            },
-            {
-              id: 'b-cam-4',
-              text: 'מימוש server-side rendering לאתר **ערוץ 10**.',
-            },
+            { id: 'b-px-2', text: 'יצירת **ספריית רכיבים** שקיצרה בחצי את זמן ההקמה של פרויקט לקוח חדש.' },
+            { id: 'b-px-3', text: 'עבודה ישירה עם מעצבים ולקוחות מהסקיצה הראשונה ועד העלייה לאוויר.' },
           ],
         },
       ],
@@ -205,24 +161,24 @@ export const baseCvHe: CvData = {
 
   strengths: [
     {
-      id: 'str-ai',
-      label: 'הנדסת AI',
-      text: 'AI coding agents, תהליכי LLM, אינטגרציות MCP, כלי פיתוח מבוססי AI ואוטומציה הנדסית.',
+      id: 'str-productivity',
+      label: 'פרודוקטיביות פיתוח',
+      text: 'CI/CD, כלי build, פלטפורמות פנימיות, תהליכי עבודה בסיוע AI ומדדים הנדסיים.',
     },
     {
       id: 'str-fullstack',
       label: 'פיתוח Full-Stack',
-      text: 'Angular, TypeScript, Node.js, APIs, מיקרו-שירותים, בסיסי נתונים ותשתיות.',
+      text: 'TypeScript, React, Node.js, APIs, בסיסי נתונים ותשתיות ענן.',
     },
     {
       id: 'str-leadership',
       label: 'הובלה טכנולוגית',
-      text: 'הובלת צוות, ארכיטקטורה, תכנון טכני, חניכה, עבודה בין-צוותית ואספקה Hands-on.',
+      text: 'הובלת צוות, ארכיטקטורה, תכנון טכני, חניכה ואספקה Hands-on.',
     },
     {
-      id: 'str-infra',
-      label: 'תשתיות הנדסיות',
-      text: 'Kubernetes, CI/CD, GitHub Actions, Git, observability ופרודוקטיביות פיתוח.',
+      id: 'str-quality',
+      label: 'איכות ואמינות',
+      text: 'בדיקות אוטומטיות, observability, טיפול בתקלות ופריסות בטוחות.',
     },
   ],
 };

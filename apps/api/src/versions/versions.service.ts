@@ -1,13 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import {
-  baseCv,
-  baseCvHe,
-  type CvData,
-  type Revision,
-  type RevisionSummary,
-  type Version,
-  type VersionSummary,
-} from '@yishai-cv/shared';
+import { type CvData, type Revision, type RevisionSummary, type Version, type VersionSummary } from '@yishai-cv/shared';
+import { loadBaseCv } from '../database/base-cv.ts';
 import { CvRepository } from '../database/cv.repository.ts';
 import type { CreateVersionDto, UpdateVersionDto } from './versions.dto.ts';
 
@@ -28,7 +21,7 @@ export class VersionsService {
 
   create({ fromVersionId, language, ...meta }: CreateVersionDto): Version {
     // Start from an existing version's data, or from the (English or Hebrew) base CV.
-    let data: CvData = language === 'he' ? baseCvHe : baseCv;
+    let data: CvData = loadBaseCv(language === 'he' ? 'he' : 'en');
     let note = language === 'he' ? 'Created from Base CV (Hebrew)' : 'Created from Base CV';
     if (fromVersionId !== undefined) {
       const source = this.get(fromVersionId);
