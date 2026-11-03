@@ -34,8 +34,8 @@ export interface Highlight {
 export interface Job {
   id: Id;
   title: string;
-  company: string; // e.g. "ZoomInfo — Productivity Engineering"
-  logo?: string; // e.g. "images/zoominfo.png" (served by the API at /images/...)
+  company: string; // e.g. "Northwind Labs — Developer Platform"
+  logo?: string; // e.g. "images/sample-northwind.svg" (served by the API at /images/...)
   dates: string; // e.g. "2024 – Present"
   groups: BulletGroup[];
   highlight?: Highlight; // the blue box under a job

@@ -20,7 +20,7 @@ export async function createApp(options?: NestApplicationOptions): Promise<NestE
   app.useGlobalFilters(new ApiExceptionFilter());
   app.enableShutdownHooks(); // closes the SQLite connection on Ctrl+C
 
-  // Logos referenced as "images/zoominfo.png" in the CV data.
+  // Logos referenced as "images/sample-northwind.svg" in the CV data.
   app.useStaticAssets(IMAGES_DIR, { prefix: '/images/' });
 
   // Production: serve the built React app too, so `npm start` is a single process.

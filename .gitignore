@@ -7,8 +7,11 @@ dist/
 /.nx/
 /coverage/
 
-# Local data: the SQLite database lives here (see apps/api/src/paths.ts)
+# Personal data stays local, so the repo can be public.
+# The SQLite database and your real base CV (base-cv.en.json / base-cv.he.json) live here (see apps/api/src/paths.ts)
 /apps/api/data/
+# Your own notes, static CVs and anything else private
+/private/
 
 # Environment
 .env

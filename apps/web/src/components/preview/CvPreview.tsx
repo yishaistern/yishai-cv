@@ -41,7 +41,7 @@ function stripProtocol(url: string): string {
   return url.replace(/^https?:\/\//, '');
 }
 
-/** "images/zoominfo.png" -> "/images/zoominfo.png", so it works from any route. */
+/** "images/sample-northwind.svg" -> "/images/sample-northwind.svg", so it works from any route. */
 function resolveLogo(src: string): string {
   if (src.startsWith('/') || src.startsWith('http')) return src;
   return `/${src}`;

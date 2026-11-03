@@ -6,16 +6,9 @@ import { Injectable, type OnModuleDestroy, type OnModuleInit } from '@nestjs/com
 import { DatabaseSync, type StatementSync } from 'node:sqlite';
 import { mkdirSync } from 'node:fs';
 import { dirname } from 'node:path';
-import {
-  baseCv,
-  baseCvHe,
-  type CvData,
-  type Revision,
-  type RevisionSummary,
-  type Version,
-  type VersionSummary,
-} from '@yishai-cv/shared';
+import { type CvData, type Revision, type RevisionSummary, type Version, type VersionSummary } from '@yishai-cv/shared';
 import { DB_PATH } from '../paths.ts';
+import { loadBaseCv } from './base-cv.ts';
 
 // ---------- Row types (what SQLite gives back: snake_case, JSON as text) ----------
 
@@ -290,8 +283,8 @@ export class CvRepository implements OnModuleInit, OnModuleDestroy {
   insertBaseVersion(): Version {
     return this.createVersion({
       name: BASE_VERSION_NAME,
-      description: 'Master version transcribed from v3.html',
-      data: baseCv,
+      description: 'Master version: every other version starts from this',
+      data: loadBaseCv('en'),
       note: 'Initial import',
     });
   }
@@ -300,7 +293,7 @@ export class CvRepository implements OnModuleInit, OnModuleDestroy {
     return this.createVersion({
       name: BASE_VERSION_NAME_HE,
       description: 'Hebrew translation of the Base CV (right-to-left layout)',
-      data: baseCvHe,
+      data: loadBaseCv('he'),
       note: 'Initial import (Hebrew)',
     });
   }
