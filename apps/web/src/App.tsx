@@ -56,11 +56,10 @@ function Dashboard() {
   }, [toast]);
 
   // ---- load the selected version whenever selectedId changes ----
+  // No setCurrent(null) when nothing is selected: the render below already shows
+  // the empty state unless `current.id === selectedId`.
   useEffect(() => {
-    if (selectedId === null) {
-      setCurrent(null);
-      return;
-    }
+    if (selectedId === null) return;
     localStorage.setItem(LAST_VERSION_KEY, String(selectedId));
     let cancelled = false;
     api
@@ -91,7 +90,7 @@ function Dashboard() {
       const created = await api.createVersion(body);
       setVersions((list) => [toSummary(created), ...list]);
       setIsDirty(false);
-      setCurrent(created); // we already have the full version — no need to refetch
+      setCurrent(created); // show it right away; the selectedId effect then refreshes it
       setSelectedId(created.id);
       toast.success(`Created “${created.name}”`);
     } catch (err) {

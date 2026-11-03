@@ -883,3 +883,20 @@ body:not(.print-mode) {
     display: none;
   }
 }
+
+/* ---------- Crash screen (ErrorBoundary) ---------- */
+.crash {
+  max-width: 560px;
+  margin: 15vh auto;
+  padding: 0 24px;
+  color: var(--ed-text);
+  font-family: system-ui, sans-serif;
+}
+.crash__details {
+  padding: 12px;
+  overflow: auto;
+  background: var(--ed-bg);
+  border: 1px solid var(--ed-border);
+  border-radius: var(--ed-radius);
+  white-space: pre-wrap;
+}

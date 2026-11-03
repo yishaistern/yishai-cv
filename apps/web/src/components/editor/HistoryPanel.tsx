@@ -40,6 +40,8 @@ export function HistoryPanel({ versionId, refreshKey, previewingId, onPreview, o
     return () => {
       cancelled = true;
     };
+    // refreshKey isn't read inside the effect: it's listed on purpose so a bump re-fetches.
+    // oxlint-disable-next-line react/exhaustive-effect-dependencies
   }, [versionId, refreshKey, toast]);
 
   return (
