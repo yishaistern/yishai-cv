@@ -34,8 +34,8 @@ export function JobsSection({ jobs, dispatch }: { jobs: Job[]; dispatch: CvDispa
       }
     >
       <p className="hint">
-        Reorder jobs, bullets and groups by dragging ⋮⋮ or with ↑/↓. Hide bullets that aren’t relevant to this job
-        post instead of deleting them. <BoldHint />
+        Reorder jobs, bullets and groups by dragging ⋮⋮ or with ↑/↓. Hide bullets that aren’t relevant to this job post
+        instead of deleting them. <BoldHint />
       </p>
       <SortableList
         items={jobs}
@@ -91,7 +91,12 @@ function JobEditor({ job, dispatch }: { job: Job; dispatch: CvDispatch }) {
         <div className="job-editor__body">
           <div className="grid-2">
             <TextField label="Title" value={job.title} onChange={(title) => update({ title })} />
-            <TextField label="Dates" value={job.dates} placeholder="2024 – Present" onChange={(dates) => update({ dates })} />
+            <TextField
+              label="Dates"
+              value={job.dates}
+              placeholder="2024 – Present"
+              onChange={(dates) => update({ dates })}
+            />
           </div>
           <TextField
             label="Company"
@@ -146,7 +151,11 @@ function JobEditor({ job, dispatch }: { job: Job; dispatch: CvDispatch }) {
                   value={job.highlight.label}
                   onChange={(e) => update({ highlight: { ...job.highlight!, label: e.target.value } })}
                 />
-                <button type="button" className="btn btn--small btn--ghost" onClick={() => update({ highlight: undefined })}>
+                <button
+                  type="button"
+                  className="btn btn--small btn--ghost"
+                  onClick={() => update({ highlight: undefined })}
+                >
                   Remove highlight
                 </button>
               </div>
@@ -183,14 +192,15 @@ function GroupEditor({ jobId, group, dispatch }: { jobId: string; group: BulletG
           placeholder="Group heading (optional)"
           aria-label="Group heading"
           value={group.heading ?? ''}
-          onChange={(e) =>
-            dispatch({ type: 'groups/update', jobId, groupId, heading: e.target.value || undefined })
-          }
+          onChange={(e) => dispatch({ type: 'groups/update', jobId, groupId, heading: e.target.value || undefined })}
         />
         <DeleteButton
           label={group.heading || 'bullet group'}
           onClick={() => {
-            if (group.bullets.length === 0 || window.confirm(`Delete this group and its ${group.bullets.length} bullets?`)) {
+            if (
+              group.bullets.length === 0 ||
+              window.confirm(`Delete this group and its ${group.bullets.length} bullets?`)
+            ) {
               dispatch({ type: 'groups/remove', jobId, groupId });
             }
           }}
@@ -212,14 +222,26 @@ function GroupEditor({ jobId, group, dispatch }: { jobId: string; group: BulletG
               placeholder="Did X using **Y**, resulting in Z"
               value={bullet.text}
               onChange={(e) =>
-                dispatch({ type: 'bullets/update', jobId, groupId, bulletId: bullet.id, patch: { text: e.target.value } })
+                dispatch({
+                  type: 'bullets/update',
+                  jobId,
+                  groupId,
+                  bulletId: bullet.id,
+                  patch: { text: e.target.value },
+                })
               }
             />
             <VisibilityToggle
               hidden={bullet.hidden}
               label={bullet.text.slice(0, 40)}
               onToggle={() =>
-                dispatch({ type: 'bullets/update', jobId, groupId, bulletId: bullet.id, patch: { hidden: !bullet.hidden } })
+                dispatch({
+                  type: 'bullets/update',
+                  jobId,
+                  groupId,
+                  bulletId: bullet.id,
+                  patch: { hidden: !bullet.hidden },
+                })
               }
             />
             <DeleteButton

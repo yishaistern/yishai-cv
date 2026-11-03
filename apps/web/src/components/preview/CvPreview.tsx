@@ -84,7 +84,9 @@ function Sidebar({ data, t }: { data: CvData; t: Labels }) {
 
         <div className="contact-row">
           <span className="contact-icon">@</span>
-          <a href={`mailto:${contact.email}`} dir="ltr">{contact.email}</a>
+          <a href={`mailto:${contact.email}`} dir="ltr">
+            {contact.email}
+          </a>
         </div>
 
         <div className="contact-row">
@@ -187,9 +189,7 @@ function JobBlock({ job }: { job: Job }) {
       </div>
 
       <div className="company-row">
-        {job.logo && (
-          <img src={resolveLogo(job.logo)} alt={job.company} className="company-icon" />
-        )}
+        {job.logo && <img src={resolveLogo(job.logo)} alt={job.company} className="company-icon" />}
         <span className="company-name">{job.company}</span>
       </div>
 
@@ -237,9 +237,7 @@ export function CvPreview({ data }: { data: CvData }) {
             // A Fragment with a key lets one array item render two siblings
             // (the optional page-break div + the job itself).
             <Fragment key={job.id}>
-              {job.pageBreakBefore && (
-                <div className="page-break" style={{ paddingTop: 25 }}></div>
-              )}
+              {job.pageBreakBefore && <div className="page-break" style={{ paddingTop: 25 }}></div>}
               <JobBlock job={job} />
             </Fragment>
           ))}

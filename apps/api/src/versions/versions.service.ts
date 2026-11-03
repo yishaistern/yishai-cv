@@ -1,5 +1,13 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { baseCv, baseCvHe, type CvData, type Revision, type RevisionSummary, type Version, type VersionSummary } from '@yishai-cv/shared';
+import {
+  baseCv,
+  baseCvHe,
+  type CvData,
+  type Revision,
+  type RevisionSummary,
+  type Version,
+  type VersionSummary,
+} from '@yishai-cv/shared';
 import { CvRepository } from '../database/cv.repository.ts';
 import type { CreateVersionDto, UpdateVersionDto } from './versions.dto.ts';
 

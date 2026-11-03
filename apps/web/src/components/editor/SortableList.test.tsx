@@ -11,12 +11,7 @@ const items = [
 
 function renderList(onMove = vi.fn<(from: number, to: number) => void>()) {
   render(
-    <SortableList
-      items={items}
-      onMove={onMove}
-      getLabel={(i) => i.label}
-      renderItem={(i) => <span>{i.label}</span>}
-    />,
+    <SortableList items={items} onMove={onMove} getLabel={(i) => i.label} renderItem={(i) => <span>{i.label}</span>} />,
   );
   return onMove;
 }
@@ -46,7 +41,14 @@ describe('<SortableList>', () => {
   });
 
   it('shows the empty text when there are no items', () => {
-    render(<SortableList items={[]} onMove={vi.fn<(from: number, to: number) => void>()} renderItem={() => null} emptyText="Nothing yet" />);
+    render(
+      <SortableList
+        items={[]}
+        onMove={vi.fn<(from: number, to: number) => void>()}
+        renderItem={() => null}
+        emptyText="Nothing yet"
+      />,
+    );
     expect(screen.getByText('Nothing yet')).toBeInTheDocument();
   });
 });

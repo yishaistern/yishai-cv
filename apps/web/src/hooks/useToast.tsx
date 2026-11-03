@@ -10,7 +10,11 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 
 type ToastKind = 'error' | 'success' | 'info';
-interface Toast { id: number; kind: ToastKind; message: string }
+interface Toast {
+  id: number;
+  kind: ToastKind;
+  message: string;
+}
 
 interface ToastApi {
   show: (message: string, kind?: ToastKind) => void;
@@ -50,7 +54,10 @@ export function ToastProvider({ children }: { children: ReactNode }) {
       const id = nextId.current++;
       setToasts((prev) => [...prev, { id, kind, message }]);
       // Errors stay longer so you can actually read them.
-      timers.current.set(id, window.setTimeout(() => dismiss(id), kind === 'error' ? 8000 : 3000));
+      timers.current.set(
+        id,
+        window.setTimeout(() => dismiss(id), kind === 'error' ? 8000 : 3000),
+      );
     },
     [dismiss],
   );

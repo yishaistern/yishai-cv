@@ -208,7 +208,13 @@ export class CvRepository implements OnModuleInit, OnModuleDestroy {
     const ts = now();
     const id = this.transaction(() => {
       const { lastInsertRowid } = this.stmt.insertVersion.run(
-        v.name, v.description ?? '', v.targetCompany ?? '', v.targetRole ?? '', json, ts, ts,
+        v.name,
+        v.description ?? '',
+        v.targetCompany ?? '',
+        v.targetRole ?? '',
+        json,
+        ts,
+        ts,
       );
       const versionId = Number(lastInsertRowid);
       this.stmt.insertRevision.run(versionId, json, v.note ?? 'Created', ts);

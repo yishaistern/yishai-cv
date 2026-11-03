@@ -127,7 +127,13 @@ export function VisibilityToggle({
 
 export function DeleteButton({ onClick, label }: { onClick: () => void; label: string }) {
   return (
-    <button type="button" className="icon-btn icon-btn--danger" onClick={onClick} aria-label={`Delete "${label}"`} title="Delete">
+    <button
+      type="button"
+      className="icon-btn icon-btn--danger"
+      onClick={onClick}
+      aria-label={`Delete "${label}"`}
+      title="Delete"
+    >
       ×
     </button>
   );

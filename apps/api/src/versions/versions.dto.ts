@@ -12,12 +12,17 @@ import {
   ValidatorConstraint,
   type ValidatorConstraintInterface,
 } from 'class-validator';
-import { CV_LANGUAGES, type CreateVersionBody, type CvData, type CvLanguage, type UpdateVersionBody } from '@yishai-cv/shared';
+import {
+  CV_LANGUAGES,
+  type CreateVersionBody,
+  type CvData,
+  type CvLanguage,
+  type UpdateVersionBody,
+} from '@yishai-cv/shared';
 
 const trim = ({ value }: { value: unknown }) => (typeof value === 'string' ? value.trim() : value);
 
-const isObject = (v: unknown): v is Record<string, unknown> =>
-  typeof v === 'object' && v !== null && !Array.isArray(v);
+const isObject = (v: unknown): v is Record<string, unknown> => typeof v === 'object' && v !== null && !Array.isArray(v);
 
 /**
  * A shallow sanity check of CvData: right top-level keys with the right types.

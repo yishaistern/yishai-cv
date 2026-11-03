@@ -18,17 +18,7 @@
 // changed ({...obj}, arr.map, arr.filter, toSpliced...) and reuse the old
 // references for anything that didn't.
 // ============================================================
-import type {
-  BulletGroup,
-  Bullet,
-  CvData,
-  CvLanguage,
-  Id,
-  Job,
-  Language,
-  Skill,
-  Strength,
-} from '@yishai-cv/shared';
+import type { BulletGroup, Bullet, CvData, CvLanguage, Id, Job, Language, Skill, Strength } from '@yishai-cv/shared';
 
 // ---------- action types (a discriminated union on `type`) ----------
 
@@ -112,12 +102,7 @@ function updateJobGroups(state: CvData, jobId: Id, fn: (groups: BulletGroup[]) =
 }
 
 /** Apply `fn` to one group's bullets. */
-function updateGroupBullets(
-  state: CvData,
-  jobId: Id,
-  groupId: Id,
-  fn: (bullets: Bullet[]) => Bullet[],
-): CvData {
+function updateGroupBullets(state: CvData, jobId: Id, groupId: Id, fn: (bullets: Bullet[]) => Bullet[]): CvData {
   return updateJobGroups(state, jobId, (groups) =>
     groups.map((g) => (g.id === groupId ? { ...g, bullets: fn(g.bullets) } : g)),
   );
@@ -214,9 +199,7 @@ export function cvReducer(state: CvData, action: CvAction): CvData {
         updateById(bullets, action.bulletId, action.patch),
       );
     case 'bullets/remove':
-      return updateGroupBullets(state, action.jobId, action.groupId, (bullets) =>
-        removeById(bullets, action.bulletId),
-      );
+      return updateGroupBullets(state, action.jobId, action.groupId, (bullets) => removeById(bullets, action.bulletId));
     case 'bullets/move':
       return updateGroupBullets(state, action.jobId, action.groupId, (bullets) =>
         moveItem(bullets, action.from, action.to),

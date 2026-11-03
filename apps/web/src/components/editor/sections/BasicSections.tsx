@@ -105,13 +105,7 @@ export function SummarySection({ summary, dispatch }: { summary: string; dispatc
   );
 }
 
-export function EducationSection({
-  education,
-  dispatch,
-}: {
-  education: CvData['education'];
-  dispatch: CvDispatch;
-}) {
+export function EducationSection({ education, dispatch }: { education: CvData['education']; dispatch: CvDispatch }) {
   return (
     <Section title="Education">
       <TextField

@@ -13,18 +13,20 @@ npm run dev          # builds libs/shared, then starts the API (:3001) and Vite 
 
 Then open http://localhost:5173.
 
-| Command | What it does |
-|---|---|
-| `npm run dev` | `nx run-many -t dev`: NestJS API (`tsc --watch` + `node --watch`) and web (`vite`), both reload on change |
-| `npm start` | Builds everything, then runs the API, which also serves the built web app at http://localhost:3001 |
-| `npm test` | Every project's tests (see [Testing](#testing)) |
-| `npm run lint` | [oxlint](https://oxc.rs) on the whole repo, warnings fail |
-| `npm run typecheck` | `tsc --noEmit` in every project |
-| `npm run check` | lint + typecheck + test + build: exactly what CI runs |
-| `npm run seed` | **Resets** the database to the base CV (from `v3.html`) |
-| `npm run build` | Production builds: `libs/shared/dist`, `apps/api/dist`, `apps/web/dist` |
-| `npm run graph` | Opens the Nx project graph |
-| `npx nx dev api` / `npx nx test web` / … | Run one target of one project |
+| Command                                  | What it does                                                                                                            |
+| ---------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| `npm run dev`                            | `nx run-many -t dev`: NestJS API (`tsc --watch` + `node --watch`) and web (`vite`), both reload on change               |
+| `npm start`                              | Builds everything, then runs the API, which also serves the built web app at http://localhost:3001                      |
+| `npm test`                               | Every project's tests (see [Testing](#testing))                                                                         |
+| `npm run e2e`                            | Browser tests: [Playwright](https://playwright.dev) + Chromium against the built app                                    |
+| `npm run lint`                           | [oxlint](https://oxc.rs) on the whole repo, warnings fail                                                               |
+| `npm run format`                         | [oxfmt](https://oxc.rs/docs/guide/usage/formatter) formats the whole repo in place (`npm run format:check` only checks) |
+| `npm run typecheck`                      | `tsc --noEmit` in every project                                                                                         |
+| `npm run check`                          | lint + format check + typecheck + test + build (CI runs this, plus `npm run e2e` in a parallel job)                     |
+| `npm run seed`                           | **Resets** the database to the base CV (from `v3.html`)                                                                 |
+| `npm run build`                          | Production builds: `libs/shared/dist`, `apps/api/dist`, `apps/web/dist`                                                 |
+| `npm run graph`                          | Opens the Nx project graph                                                                                              |
+| `npx nx dev api` / `npx nx test web` / … | Run one target of one project                                                                                           |
 
 Nx caches `build`, `typecheck` and `test`, and runs `^build` first, so `libs/shared` is always compiled before the API uses it.
 
@@ -67,23 +69,30 @@ It's compiled with plain `tsc` (`experimentalDecorators` + `emitDecoratorMetadat
 
 ## Testing
 
-| Project | Runner | What's covered |
-|---|---|---|
-| `web` | [Vitest](https://vitest.dev) + jsdom + Testing Library | `cvReducer` (immutability, every list action), `api.ts` error handling, `Markup` (bold + HTML escaping), `CvPreview` (hidden items, RTL), `SortableList`, and `Workspace` end to end: edit → dirty → ⌘S → saved |
-| `api` | `node:test` | The whole REST contract over HTTP: boots the real Nest app against an in-memory SQLite database (`CV_DB_PATH=:memory:`), so it never touches `data/cv.db` |
-| `shared` | `node:test` | The base CVs: unique ids, required content, logo files exist |
+| Project  | Runner                                                 | What's covered                                                                                                                                                                                                  |
+| -------- | ------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `web`    | [Vitest](https://vitest.dev) + jsdom + Testing Library | `cvReducer` (immutability, every list action), `api.ts` error handling, `Markup` (bold + HTML escaping), `CvPreview` (hidden items, RTL), `SortableList`, and `Workspace` end to end: edit → dirty → ⌘S → saved |
+| `api`    | `node:test`                                            | The whole REST contract over HTTP: boots the real Nest app against an in-memory SQLite database (`CV_DB_PATH=:memory:`), so it never touches `data/cv.db`                                                       |
+| `shared` | `node:test`                                            | The base CVs: unique ids, required content, logo files exist                                                                                                                                                    |
+| `e2e`    | [Playwright](https://playwright.dev) + Chromium        | The real app in a real browser: create a version (English + Hebrew/RTL), edit → live preview → ⌘S → survives a reload, history + restore, the unsaved-changes guard, print view, delete                         |
 
 ```bash
 npm test                    # everything
 npx nx test web             # one project
 npm run test:watch -w web   # Vitest watch mode
+npm run e2e                 # browser tests (first time: npx -w e2e playwright install chromium)
+npm run e2e:ui -w e2e       # Playwright UI mode (run `npx nx build api web` first)
 ```
+
+The e2e suite builds `api` and `web`, then starts the API on port 3100 with `CV_DB_PATH=:memory:`. The API also serves the web build, so the browser talks to one production-like process. It runs alongside `npm run dev` and never touches `data/cv.db`. Every test creates its own uniquely named version, so the specs run in parallel. After a failure, `npx -w e2e playwright show-report` opens the HTML report with screenshots.
 
 Tests sit next to the code they test (`*.test.ts(x)`). Shared test fixtures for the web app are in `apps/web/src/test/`.
 
-**CI:** `.github/workflows/ci.yml` runs `npm run check` on every push to `main` and on every pull request.
+**CI:** `.github/workflows/ci.yml` runs two jobs on every push to `main` and on every pull request: `check` (`npm run check`) and `e2e` (`npm run e2e`, which uploads the Playwright report as an artifact when it fails).
 
-**Linting:** oxlint instead of ESLint, because `typescript-eslint` doesn't support TypeScript 7 yet. oxlint also ships the React Compiler rules natively (`purity`, `refs`, `globals`, `immutability`, `set-state-in-effect`…), plus `jsx-a11y`. Config: `.oxlintrc.json`.
+**Linting:** [oxlint](https://oxc.rs) is TypeScript's answer to Python's Ruff: written in Rust, 50–100× faster than ESLint, with zero-config defaults. It's used instead of ESLint because `typescript-eslint` doesn't support TypeScript 7 yet. oxlint also ships the React Compiler rules natively (`purity`, `refs`, `globals`, `immutability`, `set-state-in-effect`…), plus `jsx-a11y`. Config: `.oxlintrc.json`.
+
+**Formatting:** oxfmt, the Oxc formatter. It's Prettier-compatible and about 30× faster than Prettier, so oxlint + oxfmt together cover what Ruff does for Python. Config: `.oxfmtrc.json` (single quotes, 120 columns). CI fails on unformatted files, so run `npm run format` before pushing.
 
 **Keyboard:** <kbd>⌘S</kbd> / <kbd>Ctrl+S</kbd> saves.
 **Markup:** wrap text in `**double asterisks**` to make it **bold** in the CV.
@@ -141,35 +150,35 @@ apps/web/src/
 
 ## React concepts used in this project: where to look
 
-| Concept | What it is (Angular analogy) | Where to look |
-|---|---|---|
-| **Components & props** | Functions that take a props object and return JSX (`@Input()`) | `components/editor/fields.tsx`, `VersionMetaPanel.tsx`, `preview/CvPreview.tsx` |
-| **Callback props** | A child reports events by calling a function prop (`@Output()` + `EventEmitter`) | `SortableList.tsx` (`onMove`), `Workspace.tsx` (`onSaved`, `onDirtyChange`) |
-| **children** | Nested JSX passed in (`<ng-content>`) | `Section.tsx`, `hooks/useToast.tsx` (`ToastProvider`) |
-| **useState** | Local component state; the setter triggers a re-render | `Section.tsx` (open/closed), `VersionsSidebar.tsx` (form object), `App.tsx` |
-| **Functional updates** | `setX(prev => next)` when the new state depends on the old one | `App.tsx` (`setVersions(list => …)`), `useToast.tsx` |
-| **Lazy initial state** | `useState(() => compute())` runs only once | `Workspace.tsx` (`metaOf(version)`), `App.tsx` (localStorage) |
-| **useReducer** | Pure `(state, action) => state` with typed actions (NgRx reducer) | `cvReducer.ts`, used in `hooks/useCvDocument.ts` |
-| **Immutability** | Return new objects/arrays so React sees the change | `cvReducer.ts` (`moveItem`, `updateById`, spreads) |
-| **useEffect** | Side effects after render, with cleanup (`ngOnInit`/`ngOnDestroy`, tied to deps) | `App.tsx` (fetching), `HistoryPanel.tsx` (race-safe fetch), `PrintView.tsx` |
-| **Effect cleanup** | The returned function unsubscribes or cancels | `useKeyboardShortcut.ts`, `useBeforeUnload.ts`, `useElementSize.ts` |
-| **Custom hooks** | Reusable stateful logic in a `useX` function (a service with lifecycle) | `hooks/` (all), e.g. `useCvDocument`, `useElementSize` |
-| **useRef** | A mutable box that doesn't re-render, or a DOM handle (`@ViewChild`) | `useElementSize.ts` (DOM), `useToast.tsx` (timer handles), `PrintView.tsx` |
-| **useEffectEvent** | A function an effect calls that always sees the latest props/state, without being a dependency (React 19.2) | `useKeyboardShortcut.ts` |
-| **Context** | Share a value with all descendants without passing props down (a provided service). React 19 renders `<Ctx value>` directly as the provider | `hooks/useToast.tsx` |
-| **useMemo / useCallback** | Cache a value or keep a function's identity stable between renders | `useCvDocument.ts` (dirty check), `useToast.tsx`, `App.tsx` (`handleSaved`) |
-| **useId** | Stable unique ids for label/input pairs | `fields.tsx`, `Section.tsx`, `SortableList.tsx` |
-| **Render props** | Pass a function that renders each item (`<ng-template>` + `ngTemplateOutlet`) | `SortableList.tsx`; used in `ListSections.tsx`, `JobsSection.tsx` |
-| **Generic components** | `function SortableList<T extends {id:string}>`: T is inferred from `items` | `SortableList.tsx` |
-| **Keys** | Stable `key={item.id}` so React matches list items to DOM nodes across reorders | `SortableList.tsx`, `VersionsSidebar.tsx`, `HistoryPanel.tsx` |
-| **key to reset state** | Changing `key` remounts a component with fresh state | `App.tsx` → `<Workspace key={`${id}:${nonce}`}>` |
-| **Controlled inputs** | `value` + `onChange`; React state is the source of truth (`[ngModel]` + `(ngModelChange)`) | `fields.tsx`, every section in `sections/` |
-| **Forms** | `onSubmit(e: SubmitEvent<HTMLFormElement>)` + `e.preventDefault()`, one state object for the form | `VersionsSidebar.tsx` (`NewVersionForm`), `ListSections.tsx` (add skill) |
-| **Lifting state up** | State lives in the closest common parent, and children get it via props | `Workspace.tsx` (CV data shared by the editor and the preview), `App.tsx` (dirty flag) |
-| **Derived state** | Compute from existing state instead of storing a copy | `useCvDocument.ts` (`isDirty`), `PreviewPane.tsx` (`scale`) |
-| **Conditional rendering** | `cond && <X/>`, ternaries, early `return` (`@if` / `*ngIf`) | `Section.tsx`, `JobsSection.tsx` (highlight), `HistoryPanel.tsx`, `App.tsx` |
-| **Rules of hooks** | Hooks run at the top level, never inside conditions or callbacks | `App.tsx` (print vs dashboard split), `JobsSection.tsx` (`JobEditor` extracted) |
-| **Discriminated unions** | `action.type` narrows the action; `never` makes TypeScript check every case is handled | `cvReducer.ts` |
-| **StrictMode** | Dev-only double render/effects to catch impurity | `main.tsx`, `PrintView.tsx` (`printed` ref guard) |
-| **Error boundaries** | Catch render errors below and show a fallback (the one remaining use for a class component) | `components/ErrorBoundary.tsx`, used in `main.tsx` |
-| **Document metadata** | Render `<title>` anywhere; React 19 hoists it into `<head>` | `Workspace.tsx` (version name + unsaved dot), `PrintView.tsx` (PDF file name) |
+| Concept                   | What it is (Angular analogy)                                                                                                                | Where to look                                                                          |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
+| **Components & props**    | Functions that take a props object and return JSX (`@Input()`)                                                                              | `components/editor/fields.tsx`, `VersionMetaPanel.tsx`, `preview/CvPreview.tsx`        |
+| **Callback props**        | A child reports events by calling a function prop (`@Output()` + `EventEmitter`)                                                            | `SortableList.tsx` (`onMove`), `Workspace.tsx` (`onSaved`, `onDirtyChange`)            |
+| **children**              | Nested JSX passed in (`<ng-content>`)                                                                                                       | `Section.tsx`, `hooks/useToast.tsx` (`ToastProvider`)                                  |
+| **useState**              | Local component state; the setter triggers a re-render                                                                                      | `Section.tsx` (open/closed), `VersionsSidebar.tsx` (form object), `App.tsx`            |
+| **Functional updates**    | `setX(prev => next)` when the new state depends on the old one                                                                              | `App.tsx` (`setVersions(list => …)`), `useToast.tsx`                                   |
+| **Lazy initial state**    | `useState(() => compute())` runs only once                                                                                                  | `Workspace.tsx` (`metaOf(version)`), `App.tsx` (localStorage)                          |
+| **useReducer**            | Pure `(state, action) => state` with typed actions (NgRx reducer)                                                                           | `cvReducer.ts`, used in `hooks/useCvDocument.ts`                                       |
+| **Immutability**          | Return new objects/arrays so React sees the change                                                                                          | `cvReducer.ts` (`moveItem`, `updateById`, spreads)                                     |
+| **useEffect**             | Side effects after render, with cleanup (`ngOnInit`/`ngOnDestroy`, tied to deps)                                                            | `App.tsx` (fetching), `HistoryPanel.tsx` (race-safe fetch), `PrintView.tsx`            |
+| **Effect cleanup**        | The returned function unsubscribes or cancels                                                                                               | `useKeyboardShortcut.ts`, `useBeforeUnload.ts`, `useElementSize.ts`                    |
+| **Custom hooks**          | Reusable stateful logic in a `useX` function (a service with lifecycle)                                                                     | `hooks/` (all), e.g. `useCvDocument`, `useElementSize`                                 |
+| **useRef**                | A mutable box that doesn't re-render, or a DOM handle (`@ViewChild`)                                                                        | `useElementSize.ts` (DOM), `useToast.tsx` (timer handles), `PrintView.tsx`             |
+| **useEffectEvent**        | A function an effect calls that always sees the latest props/state, without being a dependency (React 19.2)                                 | `useKeyboardShortcut.ts`                                                               |
+| **Context**               | Share a value with all descendants without passing props down (a provided service). React 19 renders `<Ctx value>` directly as the provider | `hooks/useToast.tsx`                                                                   |
+| **useMemo / useCallback** | Cache a value or keep a function's identity stable between renders                                                                          | `useCvDocument.ts` (dirty check), `useToast.tsx`, `App.tsx` (`handleSaved`)            |
+| **useId**                 | Stable unique ids for label/input pairs                                                                                                     | `fields.tsx`, `Section.tsx`, `SortableList.tsx`                                        |
+| **Render props**          | Pass a function that renders each item (`<ng-template>` + `ngTemplateOutlet`)                                                               | `SortableList.tsx`; used in `ListSections.tsx`, `JobsSection.tsx`                      |
+| **Generic components**    | `function SortableList<T extends {id:string}>`: T is inferred from `items`                                                                  | `SortableList.tsx`                                                                     |
+| **Keys**                  | Stable `key={item.id}` so React matches list items to DOM nodes across reorders                                                             | `SortableList.tsx`, `VersionsSidebar.tsx`, `HistoryPanel.tsx`                          |
+| **key to reset state**    | Changing `key` remounts a component with fresh state                                                                                        | `App.tsx` → `<Workspace key={`${id}:${nonce}`}>`                                       |
+| **Controlled inputs**     | `value` + `onChange`; React state is the source of truth (`[ngModel]` + `(ngModelChange)`)                                                  | `fields.tsx`, every section in `sections/`                                             |
+| **Forms**                 | `onSubmit(e: SubmitEvent<HTMLFormElement>)` + `e.preventDefault()`, one state object for the form                                           | `VersionsSidebar.tsx` (`NewVersionForm`), `ListSections.tsx` (add skill)               |
+| **Lifting state up**      | State lives in the closest common parent, and children get it via props                                                                     | `Workspace.tsx` (CV data shared by the editor and the preview), `App.tsx` (dirty flag) |
+| **Derived state**         | Compute from existing state instead of storing a copy                                                                                       | `useCvDocument.ts` (`isDirty`), `PreviewPane.tsx` (`scale`)                            |
+| **Conditional rendering** | `cond && <X/>`, ternaries, early `return` (`@if` / `*ngIf`)                                                                                 | `Section.tsx`, `JobsSection.tsx` (highlight), `HistoryPanel.tsx`, `App.tsx`            |
+| **Rules of hooks**        | Hooks run at the top level, never inside conditions or callbacks                                                                            | `App.tsx` (print vs dashboard split), `JobsSection.tsx` (`JobEditor` extracted)        |
+| **Discriminated unions**  | `action.type` narrows the action; `never` makes TypeScript check every case is handled                                                      | `cvReducer.ts`                                                                         |
+| **StrictMode**            | Dev-only double render/effects to catch impurity                                                                                            | `main.tsx`, `PrintView.tsx` (`printed` ref guard)                                      |
+| **Error boundaries**      | Catch render errors below and show a fallback (the one remaining use for a class component)                                                 | `components/ErrorBoundary.tsx`, used in `main.tsx`                                     |
+| **Document metadata**     | Render `<title>` anywhere; React 19 hoists it into `<head>`                                                                                 | `Workspace.tsx` (version name + unsaved dot), `PrintView.tsx` (PDF file name)          |

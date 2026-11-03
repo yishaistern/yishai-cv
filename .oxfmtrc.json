@@ -1,0 +1,13 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  // Prettier-compatible formatter from the Oxc project (the formatting half of "Ruff for TypeScript").
+  // Options match the style the code was already written in.
+  "singleQuote": true,
+  "printWidth": 120,
+  "sortPackageJson": false,
+  "ignorePatterns": [
+    // The original static CVs at the repo root are source documents, not app code.
+    "/*.html",
+    "package-lock.json"
+  ]
+}

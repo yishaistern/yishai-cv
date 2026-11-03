@@ -11,9 +11,12 @@
     "build": "nx run-many -t build",
     "start": "npm run build && npm start -w api",
     "lint": "oxlint --deny-warnings",
+    "format": "oxfmt",
+    "format:check": "oxfmt --check",
     "typecheck": "nx run-many -t typecheck",
     "test": "nx run-many -t test",
-    "check": "npm run lint && nx run-many -t typecheck test build",
+    "e2e": "nx run e2e:e2e",
+    "check": "npm run lint && npm run format:check && nx run-many -t typecheck test build",
     "seed": "nx run api:seed",
     "graph": "nx graph"
   },
@@ -21,6 +24,7 @@
     "@types/node": "^26.6.6",
     "concurrently": "^10.0.6",
     "nx": "^24.0.3",
+    "oxfmt": "^0.76.0",
     "oxlint": "^1.90.0",
     "typescript": "^7.0.2"
   },

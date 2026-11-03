@@ -15,7 +15,7 @@ export class ApiExceptionFilter implements ExceptionFilter {
     if (exception instanceof HttpException) {
       const body = exception.getResponse();
       let message: unknown =
-        typeof body === 'string' ? body : (body as { message?: unknown }).message ?? exception.message;
+        typeof body === 'string' ? body : ((body as { message?: unknown }).message ?? exception.message);
       // ValidationPipe reports one message per failed constraint.
       if (Array.isArray(message)) message = message.join('; ');
       res.status(exception.getStatus()).json({ error: String(message) });

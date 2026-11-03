@@ -43,10 +43,7 @@ export class VersionsController {
 
   @Post(':id/restore/:revisionId')
   @HttpCode(200)
-  restore(
-    @Param('id', ParseIdPipe) id: number,
-    @Param('revisionId', ParseIdPipe) revisionId: number,
-  ): Version {
+  restore(@Param('id', ParseIdPipe) id: number, @Param('revisionId', ParseIdPipe) revisionId: number): Version {
     return this.versions.restore(id, revisionId);
   }
 }

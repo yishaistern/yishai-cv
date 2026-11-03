@@ -11,7 +11,10 @@
     // Nest modules are empty classes by design: all the information is in the decorator.
     "typescript/no-extraneous-class": ["warn", { "allowWithDecorator": true }],
     // Side-effect imports we rely on: CSS files, Nest's reflect-metadata polyfill, jest-dom matchers.
-    "import/no-unassigned-import": ["warn", { "allow": ["**/*.css", "reflect-metadata", "@testing-library/jest-dom/vitest"] }],
+    "import/no-unassigned-import": [
+      "warn",
+      { "allow": ["**/*.css", "reflect-metadata", "@testing-library/jest-dom/vitest"] }
+    ],
     // <div role="status"> is the standard live region for toasts; <output> is meant for calculation results.
     "jsx-a11y/prefer-tag-over-role": "off"
   }

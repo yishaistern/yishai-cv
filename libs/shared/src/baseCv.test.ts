@@ -15,7 +15,10 @@ function allIds(cv: CvData): string[] {
   ];
 }
 
-for (const [name, cv] of [['baseCv', baseCv], ['baseCvHe', baseCvHe]] as const) {
+for (const [name, cv] of [
+  ['baseCv', baseCv],
+  ['baseCvHe', baseCvHe],
+] as const) {
   describe(name, () => {
     it('has unique ids', () => {
       const ids = allIds(cv);

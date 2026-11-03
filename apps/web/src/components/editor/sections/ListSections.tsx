@@ -28,7 +28,9 @@ export function SkillsSection({ skills, dispatch }: { skills: Skill[]; dispatch:
 
   return (
     <Section title="Skills / Tech stack" count={visible}>
-      <p className="hint">Order matters — put the skills the job post asks for first. Hidden skills stay saved but don’t print.</p>
+      <p className="hint">
+        Order matters — put the skills the job post asks for first. Hidden skills stay saved but don’t print.
+      </p>
       <SortableList
         items={skills}
         className="sortable--compact"
